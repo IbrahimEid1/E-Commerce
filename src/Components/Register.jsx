@@ -6,8 +6,10 @@ import ConvertLogOrReg from "../Components/UI/ConvertLogOrReg";
 import RegisterValidation from "./RegisterValidation";
 import instance from "./config/axios.config";
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const Navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -19,7 +21,6 @@ const Register = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // مسح الخطأ عند البدء في الكتابة
     if (errors[e.target.name]) {
       setErrors({...errors, [e.target.name]: ""});
     }
@@ -59,10 +60,12 @@ const Register = () => {
           confirmButtonText: 'Success',
           timer: 5000
         });
-        
-        // توجيه المستخدم إلى صفحة تسجيل الدخول بعد التسجيل الناجح
-        // يمكنك استخدام useNavigate من react-router-dom هنا
-        // navigate('/login');
+        setTimeout(()=>{
+          Navigate("/login")
+        },100)
+          console.log(setTimeout(()=>{
+            console.log("Hi");
+          },100));
       }
     } catch (error) {
       console.error("Error:", error);
@@ -105,6 +108,8 @@ const Register = () => {
           value={formData[name]}
           onChange={handleChange}
           disabled={isSubmitting}
+          autoComplete="new-password" 
+
         />
         {errors[name] && <InpErrorMsg msg={errors[name]} />}
       </div>

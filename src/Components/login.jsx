@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button  from "../Components/UI/Buttons"
 import Inputs  from "../Components/UI/Inputs"
 import ConvertLogOrReg  from "../Components/UI/ConvertLogOrReg"
@@ -6,7 +6,10 @@ import { LogInValidation } from "./RegisterValidation";
 import instance from "./config/axios.config";
 import Swal from 'sweetalert2';
 import { useState } from "react";
+
+
 export default function Login() {
+  const Navigate = useNavigate();
     const [FormLogin, setFormLogin] = useState({
     identifier: "",
     password: "",
@@ -56,8 +59,11 @@ export default function Login() {
           confirmButtonText: 'Success',
           timer: 5000
         });
-    
       }
+      localStorage.setItem("loginToken" , JSON.stringify(res.data))
+      setTimeout(() => {
+        location.replace("/home");
+      }, 100);
     } catch (error) {
       console.error("Error:", error);
       
@@ -97,6 +103,8 @@ export default function Login() {
           value={FormLogin[name]}
           onChange={handleChange}
           disabled={isSubmitting}
+          autoComplete="current-password" 
+
         />
         {errors[name] && <InpErrorMsg msg={errors[name]} />}
       </div>
