@@ -1,0 +1,23 @@
+.ParentList {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  width: 420px;
+  height: 20px;
+}
+.ChildList {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+}
+.list {
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-weight: 400;
+  width: 96px;
+  height: 20px;
+ 
+}
