@@ -20,32 +20,50 @@ const NavMenu = () => {
 
   const handleClick = (item) => {
     setActiveItem(item);
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => (activeItem === item ? !prev : true));
+  };
+
+  const handleMouseEnter = (item) => {
+    setActiveItem(item);
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsOpen(false);
+    setActiveItem(null);
   };
 
   return (
-    <div className="relative nav-menu">
-      <ul className="menu-list flex space-x-6">
-        {Menu.map((item, index) => (
-          <li key={index}>
-            <button
-              onMouseEnter={handleClick}
-              onMouseLeave={() => {
-                setIsOpen(false);
-              }}
-              className="menu-item hover:text-red-500"
-            >
-              {item}
-            </button>
-          </li>
-        ))}
-      </ul>
-      {isOpen && (
-        <div className="absolute left-36 top-full w-full">
-          <MegaMenu />
+    <section className="relative nav-menu responsive-navmenu">
+      <div className="menu-container">
+        <ul className="menu-list">
+          {Menu.map((item, index) => (
+            <li key={index} className="menu-list-item">
+              <button
+                onMouseEnter={() => handleMouseEnter(item)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick(item)}
+                className={`menu-item ${activeItem === item ? "active" : ""}`}
+              >
+                {item}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {isOpen && activeItem && (
+        <div
+          className="mega-menu-container"
+          onMouseEnter={() => handleMouseEnter(activeItem)}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="mega-menu-wrapper">
+            <MegaMenu activeCategory={activeItem} />
+          </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

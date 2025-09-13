@@ -1,0 +1,43 @@
+import star from "../../../assets/Star 2.png";
+export const ProductsColor = [
+  {
+    id: 1,
+    title: "Mango ",
+    description: "Kimono & Caftan - Black - Regular fit",
+    star: star,
+    bgColor: { backgroundColor: "rgba(255,0,204,0.92)", borderRadius: "8px" },
+    price: "$228",
+    oldPrice: "$290",
+    discount: "-10%",
+  },
+  {
+    id: 2,
+    title: "Zara ",
+    description: "Midi top- Daily fit",
+    star: star,
+    bgColor: { backgroundColor: "rgba(95,35,206,0.9)", borderRadius: "8px" },
+    price: "$95",
+    oldPrice: "$145",
+    discount: "-7%",
+  },
+  {
+    id: 3,
+    title: "Uniqlo ",
+    description: "Midi atlas Slim fit - bohemian",
+    star: star,
+    bgColor: { backgroundColor: "rgba(233,85,85,0.89)", borderRadius: "8px" },
+    price: "$125",
+    oldPrice: "$156",
+    discount: "-8%",
+  },
+  {
+    id: 4,
+    title: "Mango dress ",
+    description: "Kimono & Caftan - Colorful - Night club fit",
+    star: star,
+    bgColor: { backgroundColor: "rgba(59,226,103,0.83)", borderRadius: "8px" },
+    price: "$365",
+    oldPrice: "$487",
+    discount: "-15%",
+  },
+];
