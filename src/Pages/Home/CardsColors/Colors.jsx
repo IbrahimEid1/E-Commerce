@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ProductsColor } from "./ProductsColor";
 const CardsColor = () => {
   return (
@@ -6,9 +7,12 @@ const CardsColor = () => {
         <span className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-900 -translate-x-0 sm:-translate-x-10 md:-translate-x-28 underline">
           Top 100
         </span>
-        <button className="text-red-600 font-semibold text-sm sm:text-base md:text-lg hover:underline cursor-pointer translate-x-0 sm:translate-x-8 md:translate-x-24">
+        <Link
+          to="Allproduct"
+          className="text-red-600 font-semibold text-sm sm:text-base md:text-lg hover:underline cursor-pointer translate-x-0 sm:translate-x-8 md:translate-x-24"
+        >
           View All
-        </button>
+        </Link>
       </div>
 
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">

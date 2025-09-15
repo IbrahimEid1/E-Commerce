@@ -51,7 +51,7 @@ const NavBlack = () => {
           <ul className="flex justify-content-between space-x-10 mr-10">
             <button className="flex profile-btn">
               <img src={LoginIcon} alt="Login" />
-              <span>Login</span>
+              Login
             </button>
             <button className="flex mx-3 profile-btn">
               <img src={Fav} alt="Favorites" />

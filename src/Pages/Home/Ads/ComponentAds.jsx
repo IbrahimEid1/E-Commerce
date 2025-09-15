@@ -1,4 +1,5 @@
 import React from "react";
+import Links from "../Ads/Link";
 
 const ComponentAds = () => {
   return (
@@ -18,9 +19,9 @@ const ComponentAds = () => {
             </span>
             all-day dressed
           </h6>
-          <p className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all">
+          <Links className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all">
             Explore all Categoty
-          </p>
+          </Links>
         </div>
         <div
           className="w-full sm:w-[50%] h-32 sm:h-[100%] min-h-[120px]"
@@ -39,9 +40,9 @@ const ComponentAds = () => {
           <h6 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-[26px] text-white leading-5 sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[36px] font-normal text-center sm:text-left sm:mr-2 md:mr-4 lg:mr-6 xl:mr-7">
             Get in gym essentials
           </h6>
-          <p className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all">
+          <Links className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all">
             Explore all Categoty
-          </p>
+          </Links>
         </div>
         <div
           className="w-full sm:w-[50%] h-32 sm:h-[100%] min-h-[120px]"

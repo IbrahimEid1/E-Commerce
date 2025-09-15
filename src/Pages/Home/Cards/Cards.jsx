@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ProductCardHome } from "../../Products/Products";
 const Cards = () => {
   return (
@@ -6,9 +7,12 @@ const Cards = () => {
         <span className="text-3xl font-medium text-gray-900 -translate-x-28">
           Flash Sales
         </span>
-        <button className="text-red-600 font-semibold text-lg hover:underline cursor-pointer translate-x-24">
+        <Link
+          to="Allproduct"
+          className="text-red-600 font-semibold text-lg hover:underline cursor-pointer translate-x-24"
+        >
           View All
-        </button>
+        </Link>
       </div>
 
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

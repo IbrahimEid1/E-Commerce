@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ComponentAdsTwo = () => {
   return (
     <div className="w-full h-auto min-h-[50.9vh] sm:h-[45vh] md:h-[50vh] lg:h-[50.9vh] flex flex-col lg:flex-row justify-center lg:justify-evenly items-center lg:items-stretch rounded-md mt-12 sm:mt-16 md:mt-20 lg:mt-24 gap-4 lg:gap-0 p-4 lg:p-0">
@@ -12,9 +14,12 @@ const ComponentAdsTwo = () => {
           <h6 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-[26px] text-white leading-5 sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[36px] font-normal text-center sm:text-left sm:-translate-x-2 md:-translate-x-4 lg:-translate-x-6">
             Lets play dress up
           </h6>
-          <p className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all">
+          <Link
+            to="Allproduct"
+            className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all"
+          >
             Explore all Categoty
-          </p>
+          </Link>
         </div>
         <div
           className="w-full sm:w-[50%] h-32 sm:h-[100%] min-h-[120px]"
@@ -33,9 +38,12 @@ const ComponentAdsTwo = () => {
           <h6 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-[26px] text-white leading-5 sm:leading-6 md:leading-7 lg:leading-8 xl:leading-[36px] font-normal text-center sm:text-left sm:mr-2 md:mr-4 lg:mr-6 xl:mr-7">
             poolside glam include
           </h6>
-          <p className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all">
+          <Link
+            to="Allproduct"
+            className="underline cursor-pointer text-xs sm:text-sm md:text-base lg:text-lg xl:text-[20px] text-white font-normal text-center sm:text-left sm:mr-8 md:mr-16 lg:mr-20 xl:mr-24 leading-6 sm:leading-7 md:leading-8 lg:leading-9 xl:leading-[40px] hover:no-underline transition-all"
+          >
             Explore all Categoty
-          </p>
+          </Link>
         </div>
         <div
           className="w-full sm:w-[50%] h-32 sm:h-[100%] min-h-[120px]"

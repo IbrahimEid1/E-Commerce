@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Buttons from "../../../UI/Buttons";
 import { Products } from "./Products";
 const Trending = () => {
@@ -7,12 +8,12 @@ const Trending = () => {
         <span className="text-2xl md:text-3xl font-medium text-gray-900 -translate-x-24">
           Trending must-haves
         </span>
-        <Buttons
+        <Link
           className="text-red-600 font-semibold text-base md:text-lg hover:underline cursor-pointer translate-x-20"
-          text={"View All"}
+          to="Allproduct"
         >
-          &gt;
-        </Buttons>
+          View All
+        </Link>
       </div>
 
       <div className="Container-Cards w-full max-w-[85rem] mx-auto flex flex-wrap justify-center gap-11 ">
