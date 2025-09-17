@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Home from "../Home/Home";
+import Home from "../../Pages/Home";
 import { ChevronRightIcon } from "lucide-react";
 
 const NavCat = () => {

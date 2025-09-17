@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 import Logo from "../../assets/Logo.png";
 import InputSearch from "../../UI/InputSearch";
-import "../../Pages/Home/ParentNav.css";
-import List from "./GROUPS/List";
+import "./ParentNav.css";
+import List from "../GROUPS/List";
 
 import Cutomize from "../../assets/Men cosmetic.png";
 

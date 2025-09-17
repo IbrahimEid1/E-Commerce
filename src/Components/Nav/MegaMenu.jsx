@@ -2,7 +2,6 @@ const MegaMenu = () => {
   return (
     <div className="relative bg-white">
       <div className="absolute left-0 top-full w-[90%] max-w-[1067px] h-[50vh] bg-white shadow-lg rounded-lg flex p-6 z-50">
-        {/* Left List Section */}
         <div className="grid grid-cols-4 gap-6 w-[70%] max-w-[725px] h-[85%]">
           <div>
             <h3 className="font-semibold mb-3">Shoe & Bag</h3>

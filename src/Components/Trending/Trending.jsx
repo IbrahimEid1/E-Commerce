@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Buttons from "../../../UI/Buttons";
+import Buttons from "../../UI/Buttons";
 import { Products } from "./Products";
 const Trending = () => {
   return (

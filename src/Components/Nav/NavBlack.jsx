@@ -1,9 +1,9 @@
 import "./NavBlack.css";
-import Cutomize from "../../../assets/Men cosmetic.png";
-import LoginIcon from "../../../assets/Sign in.png";
-import Icon from "../../../assets/Vector.png";
-import Fav from "../../../assets/Favorides.png";
-import Cart from "../../../assets/Card.png";
+import Cutomize from "../../assets/Men cosmetic.png";
+import LoginIcon from "../../assets/Sign in.png";
+import Icon from "../../assets/Vector.png";
+import Fav from "../../assets/Favorides.png";
+import Cart from "../../assets/Card.png";
 import { useEffect, useState } from "react";
 const NavBlack = () => {
   const [isMobile, setIsMobile] = useState(false);

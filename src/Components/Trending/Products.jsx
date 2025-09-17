@@ -1,4 +1,4 @@
-import NewArrive from "../../../assets/New arivals.png";
+import NewArrive from "../../assets/New arivals.png";
 export const Products = [
   {
     id: 1,

@@ -1,6 +1,6 @@
-import right from "../../../assets/left.png";
-import left from "../../../assets/snapedit_1757551813844.jpg";
-import Buttons from "../../../UI/Buttons";
+import right from "../../assets/left.png";
+import left from "../../assets/snapedit_1757551813844.jpg";
+import Buttons from "../../UI/Buttons";
 const HeroSection = () => {
   return (
     <section className="w-full h-[460px] md:h-[460px] sm:h-[300px] xs:h-[250px] flex md:flex-row flex-col overflow-hidden m-0 p-0">

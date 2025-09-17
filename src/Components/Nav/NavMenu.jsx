@@ -1,6 +1,6 @@
 import "./Menunav.css";
 import React, { useState } from "react";
-import MegaMenu from "../MegaMenu";
+import MegaMenu from "./MegaMenu";
 
 const NavMenu = () => {
   const [isOpen, setIsOpen] = useState(false);

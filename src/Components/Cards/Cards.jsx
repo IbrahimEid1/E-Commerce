@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ProductCardHome } from "../../Products/Products";
+import { ProductCardHome } from "../ProductDetails/Products";
 const Cards = () => {
   return (
     <div className="ParentCards w-[100%] min-h-screen bg-gray-50 py-12 px-6 flex justify-start items-start flex-col">

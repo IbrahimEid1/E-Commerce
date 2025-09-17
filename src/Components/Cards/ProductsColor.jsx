@@ -1,4 +1,4 @@
-import star from "../../../assets/Star 2.png";
+import star from "../../assets/Star 2.png";
 export const ProductsColor = [
   {
     id: 1,

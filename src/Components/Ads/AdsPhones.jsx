@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import phone from "../../../assets/ImagePhones.png";
+import phone from "../../assets/ImagePhones.png";
 
 const AdsPhones = () => {
   return (
