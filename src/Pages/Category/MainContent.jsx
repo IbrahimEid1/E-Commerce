@@ -1,10 +1,12 @@
 import React from "react";
 import { AllProducts } from "./AllProducts";
+import { Link } from "react-router-dom";
 const MainContent = () => {
   return (
     <div className="flashSales w-[100%] max-w-[70rem] h-[100vh]  mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
       {AllProducts.map((items, idx) => (
-        <div
+        <Link
+          to={`/Allproduct/${items.id}`}
           className="Card flex h-[500px] flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
           key={idx}
         >
@@ -62,7 +64,7 @@ const MainContent = () => {
               </span>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
