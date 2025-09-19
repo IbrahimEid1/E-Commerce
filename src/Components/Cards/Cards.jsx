@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { ProductCardHome } from "../ProductDetails/Products";
+import { useContext } from "react";
+import { CartContext } from "../../context/ContextCart";
+import toast, { Toaster } from "react-hot-toast";
 const Cards = () => {
+  const { AddToCart } = useContext(CartContext);
   return (
     <div className="ParentCards w-[100%] min-h-screen bg-gray-50 py-12 px-6 flex justify-start items-start flex-col">
       <div className="TitleParent w-[100%] max-w-6xl mx-auto flex items-center justify-between mb-14">
-        <span className="text-3xl font-medium text-gray-900 -translate-x-28">
+        <span className="text-3xl font-medium text-gray-900 -translate-x-28 ">
           Flash Sales
         </span>
         <Link
@@ -67,6 +71,17 @@ const Cards = () => {
                   {items.discount}
                 </span>
               </div>
+            </div>
+            <div className="btn w-30 rounded-md  mx-3 mb-3 outline-none bg-blue-600 text-center">
+              <button
+                className="text-[12px] p-1 text-white m-2 "
+                onClick={() => {
+                  AddToCart(items);
+                  <Toaster position="bottom-center" reverseOrder={true} />;
+                }}
+              >
+                Add To Cart
+              </button>
             </div>
           </div>
         ))}

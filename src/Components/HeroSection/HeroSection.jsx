@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import right from "../../assets/left.png";
 import left from "../../assets/snapedit_1757551813844.jpg";
 import Buttons from "../../UI/Buttons";
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="w-full h-[460px] md:h-[460px] sm:h-[300px] xs:h-[250px] flex md:flex-row flex-col overflow-hidden m-0 p-0">
       <div
-        className="w-full md:w-[40%] h-1/2 md:h-full bg-cover bg-center flex justify-end md:justify-end justify-center items-center"
+        className="w-full md:w-[40%] h-1/2 md:h-full bg-cover bg-center flex  md:justify-end justify-center items-center"
         style={{ backgroundImage: `url(${right})` }}
       >
         <div className="Offer bg-white w-[240px] md:w-[240px] sm:w-[200px] xs:w-[180px] h-[163px] md:h-[163px] sm:h-[140px] xs:h-[120px] flex justify-center flex-col md:translate-x-28 sm:translate-x-0 xs:translate-x-0 translate-x-0">
@@ -36,6 +38,9 @@ const HeroSection = () => {
           </h3>
           <Buttons
             text={"Shop Now"}
+            onClick={() => {
+              navigate("/Allproduct");
+            }}
             className={
               "w-[243px] md:w-[243px] sm:w-[200px] xs:w-[180px] h-[56px] md:h-[56px] sm:h-[48px] xs:h-[44px] bg-blue-500 rounded-md text-xl md:text-xl sm:text-lg xs:text-base text-white flex items-center justify-center"
             }

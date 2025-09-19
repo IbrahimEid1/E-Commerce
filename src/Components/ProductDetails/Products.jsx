@@ -12,7 +12,7 @@ export const ProductCardHome = [
     Modal: "Tonny Black",
     ModalTitle: "Shoulder bag-White-Plain",
     Star: "⭐⭐⭐⭐⭐",
-    Salary: "     $69     ",
+    price: "     $69     ",
     OldSalaty: "129.99",
     discount: "-40%",
   },

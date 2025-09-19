@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AllProducts } from "./AllProducts";
 import { Link } from "react-router-dom";
+import { CartContext } from "../../context/ContextCart";
+
 const MainContent = () => {
+  const { AddToCart } = useContext(CartContext);
+
   return (
     <div className="flashSales w-[100%] max-w-[70rem] h-[100vh]  mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
       {AllProducts.map((items, idx) => (
-        <Link
-          to={`/Allproduct/${items.id}`}
+        <div
           className="Card flex h-[500px] flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
           key={idx}
         >
           <div className="ContainerImg flex justify-start p-3 sm:p-4 md:p-5 w-[100%] h-[200px] sm:h-[300px] md:h-[370px]">
-            <img
+            <Link
+              to={`/Allproduct/${items.id}`}
               className="w-[100%] h-[100%] object-cover rounded-lg"
               style={items.bgColor}
             />
@@ -64,7 +68,17 @@ const MainContent = () => {
               </span>
             </div>
           </div>
-        </Link>
+          <div className="btn w-30 rounded-md  mx-3 mb-3 outline-none bg-blue-600 text-center">
+            <button
+              className="text-[12px] p-1 text-white m-2 "
+              onClick={() => {
+                AddToCart(items);
+              }}
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
       ))}
     </div>
   );

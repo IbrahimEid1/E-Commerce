@@ -124,8 +124,8 @@
 
         .circle {
           position: absolute;
-          top: -5px;
-          right: -5px;
+          top: 8px;
+          right: -18px;
           background: #ef4444;
           color: white;
           font-size: 0.75rem;
