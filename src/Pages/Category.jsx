@@ -12,7 +12,6 @@ const Category = () => {
       <NavCat />
       <NavCat2 />
       <ContentCategory />
-      <Footer />
     </>
   );
 };

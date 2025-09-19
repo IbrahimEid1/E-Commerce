@@ -6,12 +6,14 @@ import Fav from "../../assets/Favorides.png";
 import Cart from "../../assets/Card.png";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/ContextCart";
-import ProductsInCart from "../ProductsInCart";
 import CartMenu from "../ProductsInCart";
+import CartFav from "../CartFav";
 const NavBlack = () => {
   const { cartCount } = useContext(CartContext);
   const { setIsOpen, IsOpened } = useContext(CartContext);
   const [isMobile, setIsMobile] = useState(false);
+  const { setIsOpenFav, CountFav, IsOpenedFav } = useContext(CartContext);
+
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -58,11 +60,17 @@ const NavBlack = () => {
               <img src={LoginIcon} alt="Login" />
               Login
             </button>
-            <button className="flex mx-3 profile-btn">
+            <div
+              className="flex mx-3 profile-btn"
+              onClick={() => {
+                setIsOpenFav((prev) => !prev);
+              }}
+            >
               <img src={Fav} alt="Favorites" />
               <span>Favorites</span>
-            </button>
-            <button
+              {IsOpenedFav ? <CartFav /> : null}
+            </div>
+            <div
               className="flex mx-3 profile-btn cart-btn"
               onClick={() => {
                 setIsOpen((prev) => !prev);
@@ -72,9 +80,9 @@ const NavBlack = () => {
               <img src={Cart} alt="Cart" />
               Cart
               {cartCount.length ? (
-                <span className="circle bg-green-500">{cartCount.length} </span>
+                <span className="circle bg-green-500 ">{cartCount.length}</span>
               ) : null}
-            </button>
+            </div>
           </ul>
         </div>
       </div>

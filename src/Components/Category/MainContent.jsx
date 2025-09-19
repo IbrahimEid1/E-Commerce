@@ -2,15 +2,17 @@ import React, { useContext } from "react";
 import { AllProducts } from "./AllProducts";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../context/ContextCart";
-
+import Heart from "../../UI/Heart";
+import Star from "../../UI/Stars";
 const MainContent = () => {
   const { AddToCart } = useContext(CartContext);
+  const { AddToFav } = useContext(CartContext);
 
   return (
-    <div className="flashSales w-[100%] max-w-[70rem] h-[100vh]  mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
+    <div className="flashSales w-[100%] max-w-[70rem] h-[150vh]  mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
       {AllProducts.map((items, idx) => (
         <div
-          className="Card flex h-[500px] flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
+          className="Card flex h-[600px] flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
           key={idx}
         >
           <div className="ContainerImg flex justify-start p-3 sm:p-4 md:p-5 w-[100%] h-[200px] sm:h-[300px] md:h-[370px]">
@@ -26,33 +28,23 @@ const MainContent = () => {
               <p className="w-full text-xs sm:text-sm md:text-[12px] font-bold text-gray-900 line-clamp-2">
                 {items.title}
               </p>
-              <p className="text-xs sm:text-xs md:text-[10px] text-gray-600 line-clamp-3">
+              <p className="text-xs sm:text-xs md:text-[10px] text-gray-600 line-clamp-3 flex flex-row w-full  items-center justify-between ">
                 {items.description}
+                <Heart
+                  onClick={() => {
+                    AddToFav(items);
+                  }}
+                />
               </p>
-              <div className="flex items-center mt-1">
-                <div className="flex text-yellow-400">
-                  <img
-                    src={items.star}
-                    alt="star"
-                    className="w-3 h-3 sm:w-4 sm:h-4"
-                  />
-                  <img
-                    src={items.star}
-                    alt="star"
-                    className="w-3 h-3 sm:w-4 sm:h-4"
-                  />
-                  <img
-                    src={items.star}
-                    alt="star"
-                    className="w-3 h-3 sm:w-4 sm:h-4"
-                  />
-                  <img
-                    src={items.star}
-                    alt="star"
-                    className="w-3 h-3 sm:w-4 sm:h-4"
-                  />
+              <div className="flex items-center mt-1 flex-row justify-between w-full">
+                <div className="flex text-yellow-400 justify-evenly items-center ">
+                  <Star />
+                  <Star />
+                  <Star />
+                  <Star />
+                  <span className="text-xs text-gray-500 ml-1">(54)</span>
                 </div>
-                <span className="text-xs text-gray-500 ml-1">(54)</span>
+                <div></div>
               </div>
             </div>
 

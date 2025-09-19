@@ -25,8 +25,8 @@ export const ProductCardHome = [
     Modal: "Reebok",
     ModalTitle: "Women’s Powder sneakers",
     Star: "⭐⭐⭐⭐",
-    Salary: "$112.02",
-    OldSalaty: "$129.99",
+    price: "$112.02",
+    OldPrice: "$129.99",
     discount: "-40%",
   },
   {
