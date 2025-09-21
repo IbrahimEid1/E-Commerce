@@ -4,7 +4,7 @@ import LoginIcon from "../../assets/Sign in.png";
 import Icon from "../../assets/Vector.png";
 import Fav from "../../assets/Favorides.png";
 import Cart from "../../assets/Card.png";
-import { useContext, useEffect, useState } from "react";
+import { memo, useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/ContextCart";
 import CartMenu from "../ProductsInCart";
 import CartFav from "../CartFav";
@@ -28,6 +28,7 @@ const NavBlack = () => {
   if (isMobile) {
     return null;
   }
+
   return (
     <div className="Parent responsive-navblack">
       <div className="Child-Parent">
@@ -64,6 +65,7 @@ const NavBlack = () => {
               className="flex mx-3 profile-btn"
               onClick={() => {
                 setIsOpenFav((prev) => !prev);
+                setIsOpen(false);
               }}
             >
               <img src={Fav} alt="Favorites" />
@@ -74,6 +76,7 @@ const NavBlack = () => {
               className="flex mx-3 profile-btn cart-btn"
               onClick={() => {
                 setIsOpen((prev) => !prev);
+                setIsOpenFav(false);
               }}
             >
               {IsOpened ? <CartMenu /> : null}
@@ -89,4 +92,4 @@ const NavBlack = () => {
     </div>
   );
 };
-export default NavBlack;
+export default memo(NavBlack);

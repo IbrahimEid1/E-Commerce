@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { CartContext } from "../context/ContextCart";
 
 const CartFav = () => {
@@ -52,4 +52,4 @@ const CartFav = () => {
     </div>
   );
 };
-export default CartFav;
+export default memo(CartFav);

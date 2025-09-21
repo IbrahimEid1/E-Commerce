@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Home from "../../Pages/Home";
 import { ChevronRightIcon } from "lucide-react";
+import { memo } from "react";
 
 const NavCat = () => {
   return (
@@ -18,4 +19,4 @@ const NavCat = () => {
     </div>
   );
 };
-export default NavCat;
+export default memo(NavCat);

@@ -2,10 +2,12 @@ import Navbar from "../Nav/Navbar";
 import NavBlack from "../Nav/NavBlack";
 import NavCat from "../Category/NavCat";
 import { AllProducts } from "../Category/AllProducts";
-import { useContext, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { CirclePlus, Heart } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { CartContext } from "../../context/ContextCart";
+import Example from "./ComponentTabs";
+import Tabs from "./ComponentTabs";
 const ProductDetails = () => {
   const { id } = useParams();
   const Products = AllProducts.find((item) => item.id === parseInt(id));
@@ -154,7 +156,8 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      <Tabs />
     </>
   );
 };
-export default ProductDetails;
+export default memo(ProductDetails);

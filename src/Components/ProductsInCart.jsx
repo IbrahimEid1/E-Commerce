@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { CartContext } from "../context/ContextCart";
 import { Handbag } from "lucide-react";
 
@@ -52,4 +52,4 @@ const CartMenu = () => {
     </div>
   );
 };
-export default CartMenu;
+export default memo(CartMenu);

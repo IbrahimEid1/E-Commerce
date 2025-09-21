@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, memo } from "react";
 import {
   ShoppingCart,
   Menu,
@@ -8,22 +8,12 @@ import {
 } from "lucide-react";
 import Logo from "../../assets/Logo.png";
 import InputSearch from "../../UI/InputSearch";
-import "./ParentNav.css";
 import List from "../GROUPS/List";
-
 import Cutomize from "../../assets/Men cosmetic.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+
   const navBlackContent = {
     leftItems: ["Categories", "USD", "English"],
     promotion: {
@@ -33,6 +23,7 @@ const Navbar = () => {
     },
     userActions: [],
   };
+
   const navMenuContent = [
     "Woman",
     "Male",
@@ -45,117 +36,98 @@ const Navbar = () => {
     "Sport & Outdoor",
   ];
 
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
   return (
-    <nav className="main-navbar">
-      <div className="ChildNav">
-        <div className="container-logo">
-          <img src={Logo} alt="Logo" className="logo" />
-          <h1>Luminae</h1>
+    <nav className="w-full bg-white shadow-md overflow-hidden">
+      <div className="flex items-center justify-between px-4 sm:px-8 py-3">
+        <div className="flex items-center gap-2">
+          <img src={Logo} alt="Logo" className="w-10 h-10" />
+          <h1 className="text-xl font-bold">Luminae</h1>
         </div>
 
-        {!isMobile && (
-          <>
-            <div className="container-input">
-              <InputSearch />
-            </div>
-            <div className="container-links">
-              <List />
-            </div>
-          </>
-        )}
+        <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
+          <InputSearch />
+          <List />
+        </div>
 
-        {isMobile && (
-          <button
-            onClick={toggleMenu}
-            className="mobile-menu-btn"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
-          </button>
-        )}
-        {!isMobile && (
-          <div className="socail">
-            <Instagram />
-            <Facebook />
-            <CloseIcon />
-          </div>
-        )}
+        <div className="hidden md:flex gap-4 text-gray-600">
+          <Instagram />
+          <Facebook />
+          <ShoppingCart />
+        </div>
+
+        <button
+          onClick={toggleMenu}
+          className="md:hidden p-2 text-gray-700"
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      {isMobile && isOpen && (
-        <div className="mobile-menu">
-          <div className="mobile-navblack-section">
-            <h3 className="section-title">Quick Access</h3>
-
-            <div className="mobile-quick-items">
+      {isOpen && (
+        <div className="md:hidden bg-gray-50 border-t border-gray-200">
+          <div className="px-4 py-3">
+            <h3 className="font-semibold text-gray-700 mb-2">Quick Access</h3>
+            <div className="flex flex-wrap gap-2">
               {navBlackContent.leftItems.map((item, index) => (
-                <button key={index} className="mobile-quick-item">
+                <button
+                  key={index}
+                  className="px-3 py-1 bg-white border rounded-md text-sm text-gray-700"
+                >
                   {item}
                 </button>
               ))}
             </div>
-
-            <div className="mobile-promotion"></div>
-            <div className="mobile-user-actions">
-              {navBlackContent.userActions.map((Action, index) => (
-                <button key={index} className="mobile-user-action">
-                  <Action.icon className="action-icon" />
-                  <span>{Action.text}</span>
-                  {Action.badge && (
-                    <span className="action-badge">{Action.badge}</span>
-                  )}
-                </button>
-              ))}
-            </div>
           </div>
 
-          <div className="mobile-separator"></div>
-          <div className="mobile-navmenu-section">
-            <h3 className="section-title">Categories</h3>
-            <div className="mobile-categories">
+          <div className="px-4 py-3">
+            <h3 className="font-semibold text-gray-700 mb-2">Categories</h3>
+            <div className="grid grid-cols-2 gap-2">
               {navMenuContent.map((category, index) => (
-                <a key={index} href="#" className="mobile-category-link">
+                <a
+                  key={index}
+                  href="#"
+                  className="text-gray-600 hover:text-red-500 text-sm"
+                >
                   {category}
                 </a>
               ))}
             </div>
           </div>
 
-          <div className="mobile-search-section">
-            <h3 className="section-title">Search</h3>
+          <div className="px-4 py-3">
+            <h3 className="font-semibold text-gray-700 mb-2">Search</h3>
             <InputSearch />
           </div>
 
-          <div className="mobile-nav-section">
-            <h3 className="section-title">Navigation</h3>
+          <div className="px-4 py-3">
+            <h3 className="font-semibold text-gray-700 mb-2">Navigation</h3>
             <List />
           </div>
 
-          <div className="mobile-default-links">
-            <a href="/" className="mobile-default-link">
+          <div className="px-4 py-3 space-y-1">
+            <a href="/" className="block text-gray-700">
               Home
             </a>
-            <a href="/products" className="mobile-default-link">
+            <a href="/products" className="block text-gray-700">
               Products
             </a>
-            <a href="/about" className="mobile-default-link">
+            <a href="/about" className="block text-gray-700">
               About
             </a>
-            <a href="/contact" className="mobile-default-link">
+            <a href="/contact" className="block text-gray-700">
               Contact
             </a>
           </div>
 
-          <div className="mobile-social">
-            <h3 className="section-title">Follow Us</h3>
-            <div className="social-icons">
+          <div className="px-4 py-3">
+            <h3 className="font-semibold text-gray-700 mb-2">Follow Us</h3>
+            <div className="flex gap-4 text-gray-600">
               <Instagram />
               <Facebook />
-              <CloseIcon />
+              <ShoppingCart />
             </div>
           </div>
         </div>
@@ -164,4 +136,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

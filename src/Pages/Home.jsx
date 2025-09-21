@@ -9,16 +9,16 @@ import ComponentAds from "../Components/Ads/ComponentAds";
 import AdsPhones from "../Components/Ads/AdsPhones";
 import ComponentAdsTwo from "../Components/Ads/ComponentAdsTwo";
 import Footer from "../Components/Footer/Footer";
-import { useContext } from "react";
+import { useContext , memo } from "react";
 import { CartContext } from "../context/ContextCart";
 const Home = () => {
-  const { IsOpened } = useContext(CartContext);
+  const { IsOpened, IsOpenedFav } = useContext(CartContext);
 
   return (
     <>
       <Navbar />
       <NavBlack />
-      {IsOpened ? null : <NavMenu />}
+      {IsOpened || IsOpenedFav ? null : <NavMenu />}
       <HeroSection />
       <Cards />
       <Trending />
@@ -30,4 +30,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default memo(Home);

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ProductsColor } from "./ProductsColor";
+import { memo } from "react";
 const CardsColor = () => {
   return (
     <div className="ParentCards w-[100%] h-[auto] bg-gray-50 py-6 sm:py-8 md:py-12 px-3 sm:px-4 md:px-6 flex justify-start items-start flex-col">
@@ -81,4 +82,4 @@ const CardsColor = () => {
     </div>
   );
 };
-export default CardsColor;
+export default memo(CardsColor);

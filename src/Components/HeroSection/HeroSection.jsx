@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import right from "../../assets/left.png";
 import left from "../../assets/snapedit_1757551813844.jpg";
 import Buttons from "../../UI/Buttons";
+import { memo } from "react";
 const HeroSection = () => {
   const navigate = useNavigate();
   return (
@@ -50,4 +51,4 @@ const HeroSection = () => {
     </section>
   );
 };
-export default HeroSection;
+export default memo(HeroSection);

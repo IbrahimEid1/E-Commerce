@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const MegaMenu = () => {
   return (
     <div className="relative bg-white">
@@ -81,4 +83,4 @@ const MegaMenu = () => {
   );
 };
 
-export default MegaMenu;
+export default memo(MegaMenu);

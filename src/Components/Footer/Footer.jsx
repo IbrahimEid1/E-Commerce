@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { ChevronDown, Instagram, Facebook, Share } from "lucide-react";
 
 const Footer = () => {
@@ -235,4 +235,4 @@ const Footer = () => {
     </div>
   );
 };
-export default Footer;
+export default memo(Footer);

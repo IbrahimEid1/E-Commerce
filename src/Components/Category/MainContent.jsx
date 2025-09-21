@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import { AllProducts } from "./AllProducts";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../context/ContextCart";
@@ -75,4 +75,4 @@ const MainContent = () => {
     </div>
   );
 };
-export default MainContent;
+export default memo(MainContent);

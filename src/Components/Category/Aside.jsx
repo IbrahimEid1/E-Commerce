@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Inputs from "../../UI/Inputs";
 
 const Aside = () => {
@@ -210,4 +210,4 @@ const Aside = () => {
     </div>
   );
 };
-export default Aside;
+export default memo(Aside);

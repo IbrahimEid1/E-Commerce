@@ -4,6 +4,7 @@ import NavCat from "../Components/Category/NavCat";
 import NavCat2 from "../Components/Category/NavCat2";
 import ContentCategory from "../Components/Category/ContentCategory";
 import Footer from "../Components/Footer/Footer";
+import { memo } from "react";
 const Category = () => {
   return (
     <>
@@ -15,4 +16,4 @@ const Category = () => {
     </>
   );
 };
-export default Category;
+export default memo(Category);

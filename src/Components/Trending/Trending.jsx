@@ -4,13 +4,13 @@ import { Products } from "./Products";
 const Trending = () => {
   return (
     <div className="ParentTrending w-full min-h-[70vh] font-lato px-4">
-      <div className="w-full max-w-6xl mx-auto flex items-center justify-between mb-6 ">
-        <span className="text-2xl md:text-3xl font-medium text-gray-900 -translate-x-24">
-          Trending must-haves
+      <div className="TitleParent w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 sm:mb-14 gap-4">
+        <span className="text-2xl sm:text-3xl font-medium text-gray-900">
+          Trending must-haves{" "}
         </span>
         <Link
-          className="text-red-600 font-semibold text-base md:text-lg hover:underline cursor-pointer translate-x-20"
           to="Allproduct"
+          className="text-red-600 font-semibold text-base sm:text-lg hover:underline cursor-pointer"
         >
           View All
         </Link>

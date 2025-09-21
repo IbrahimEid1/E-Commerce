@@ -1,5 +1,6 @@
 import "./Menunav.css";
 import MegaMenu from "./MegaMenu";
+import { memo } from "react";
 
 const NavMenu = () => {
   const Menu = [
@@ -35,4 +36,4 @@ const NavMenu = () => {
   );
 };
 
-export default NavMenu;
+export default memo(NavMenu);

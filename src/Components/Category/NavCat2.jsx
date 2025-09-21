@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Buttons from "../../UI/Buttons";
 import { AllProducts } from "./AllProducts";
 
@@ -29,4 +30,4 @@ const NavCat2 = () => {
     </div>
   );
 };
-export default NavCat2;
+export default memo(NavCat2);

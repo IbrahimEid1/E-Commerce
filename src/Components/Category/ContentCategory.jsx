@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Aside from "./Aside";
 import MainContent from "./MainContent";
 
@@ -12,4 +13,4 @@ const ContentCategory = () => {
   );
 };
 
-export default ContentCategory;
+export default memo(ContentCategory);

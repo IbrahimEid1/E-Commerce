@@ -1,3 +1,4 @@
+import { memo } from "react";
 import React, { useState } from "react";
 import {
   ShoppingCart,
@@ -11,7 +12,7 @@ import {
   User,
 } from "lucide-react";
 
-export default function Blog() {
+ const  Blog  = ()=> {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const blogPosts = [
@@ -393,3 +394,4 @@ export default function Blog() {
     </div>
   );
 }
+export default memo(Blog)

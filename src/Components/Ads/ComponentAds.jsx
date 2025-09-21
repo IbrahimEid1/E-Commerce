@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Links from "../Ads/Link";
 
 const ComponentAds = () => {
@@ -52,4 +52,4 @@ const ComponentAds = () => {
     </div>
   );
 };
-export default ComponentAds;
+export default memo(ComponentAds);

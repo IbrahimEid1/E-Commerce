@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import phone from "../../assets/ImagePhones.png";
+import { memo } from "react";
 
 const AdsPhones = () => {
   return (
@@ -44,4 +45,4 @@ const AdsPhones = () => {
     </div>
   );
 };
-export default AdsPhones;
+export default memo(AdsPhones);

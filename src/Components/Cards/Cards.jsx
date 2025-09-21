@@ -1,24 +1,23 @@
 import { Link } from "react-router-dom";
 import { ProductCardHome } from "../ProductDetails/Products";
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { CartContext } from "../../context/ContextCart";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 const Cards = () => {
   const { AddToCart } = useContext(CartContext);
   return (
-    <div className="ParentCards w-[100%] min-h-screen bg-gray-50 py-12 px-6 flex justify-start items-start flex-col">
-      <div className="TitleParent w-[100%] max-w-6xl mx-auto flex items-center justify-between mb-14">
-        <span className="text-3xl font-medium text-gray-900 -translate-x-28 ">
+    <div className="ParentCards w-full min-h-screen bg-gray-50 py-12 px-4 sm:px-6 flex flex-col">
+      <div className="TitleParent w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 sm:mb-14 gap-4">
+        <span className="text-2xl sm:text-3xl font-medium text-gray-900">
           Flash Sales
         </span>
         <Link
           to="Allproduct"
-          className="text-red-600 font-semibold text-lg hover:underline cursor-pointer translate-x-24"
+          className="text-red-600 font-semibold text-base sm:text-lg hover:underline cursor-pointer"
         >
           View All
         </Link>
       </div>
-
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {ProductCardHome.map((items, idx) => (
           <div
@@ -42,10 +41,7 @@ const Cards = () => {
             </div>
 
             <div className="ContainerImg flex justify-start p-5 w-[100%] h-[270px]">
-              <img
-                src={items.Image}
-                className="w-[80%] h-[100%] object-cover"
-              />
+              <div style={items.bgColor} className="w-[80%] h-[100%] " />
             </div>
 
             <div className="container-footerFlash w-full p-4 flex flex-col gap-2 items-start justify-start border-t border-gray-100">
@@ -89,4 +85,4 @@ const Cards = () => {
     </div>
   );
 };
-export default Cards;
+export default memo(Cards);

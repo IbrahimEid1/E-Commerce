@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 
 const ComponentAdsTwo = () => {
@@ -53,4 +54,4 @@ const ComponentAdsTwo = () => {
     </div>
   );
 };
-export default ComponentAdsTwo;
+export default memo(ComponentAdsTwo);

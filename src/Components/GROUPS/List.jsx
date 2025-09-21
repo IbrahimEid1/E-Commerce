@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./List.css";
 const List = () => {
   const GroupList = ["About us", "Blog", "Contact us", "Help & support"];
@@ -15,4 +16,4 @@ const List = () => {
     </div>
   );
 };
-export default List;
+export default memo(List);
