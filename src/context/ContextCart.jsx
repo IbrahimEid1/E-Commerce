@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 export const CartContext = createContext();
 export const AddCart = ({ children }) => {
@@ -7,6 +7,18 @@ export const AddCart = ({ children }) => {
   const [IsOpened, setIsOpen] = useState(false);
   const [IsOpenedFav, setIsOpenFav] = useState(false);
 
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    const savedFav = localStorage.getItem("Fav");
+    if (savedCart || savedFav) {
+      setCartCount(JSON.parse(savedCart));
+      setCountFav(JSON.parse(savedFav));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartCount));
+    localStorage.setItem("Fav", JSON.stringify(CountFav));
+  }, [cartCount, CountFav]);
   const AddToCart = (items) => {
     setCartCount((prev) => [...prev, items]);
     toast.success(`Added to cart ${items.title}`);
@@ -14,7 +26,6 @@ export const AddCart = ({ children }) => {
   };
   const AddToFav = (items) => {
     setCountFav((prev) => [...prev, items]);
-
     toast.success(`Added to Favorites ${items.title}`);
     setIsOpenFav((prev) => !prev);
   };
