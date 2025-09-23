@@ -1,4 +1,4 @@
-import Iphone14 from "../../assets/335cc4509f3d5f41c49d39b6614924c70cd0110f.png";
+import Iphone14 from "../../assets/Iphone14.png";
 import Iphone from "../../assets/8b15ef0c2ec18eb88e0836f173d06a1aba572a83.png";
 import TwoIphones from "../../assets/0ce0ebceeafc7e58970746af920838d055951a9a.jpg";
 import IphoneYellow from "../../assets/17e3cf5e3afe6d485dc17e48e2fdba34e0e90bf8.png";
@@ -107,14 +107,12 @@ export const Iphones = [
     title: "Iphone 14 Pro",
     price: "$960.99",
     image: Iphone14,
-    className: "w-[50%] h-[100%] object-cover",
   },
   {
     id: 2,
     title: "Iphone 14 Pro",
     price: "$960.99",
     image: Iphone11,
-    className: "w-[50%] h-[70%] object-cover",
   },
   {
     id: 3,
@@ -123,7 +121,6 @@ export const Iphones = [
     oldPrice: "$129.99",
     discount: "-40% ",
     image: IphoneYellow,
-    className: "w-[50%] h-[70%]  object-cover",
   },
   {
     id: 4,
@@ -132,7 +129,6 @@ export const Iphones = [
     oldPrice: "$129.99",
     discount: "-40% ",
     image: Iphone12Blue,
-    className: "w-[50%] h-[70%] object-cover",
   },
   {
     id: 4,
@@ -141,7 +137,6 @@ export const Iphones = [
     oldPrice: "$129.99",
     discount: "-40% ",
     image: Iphone12,
-    className: "w-[50%]  h-[70%] object-cover",
   },
 ];
 export const hinter = [

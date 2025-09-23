@@ -2,7 +2,7 @@ import { memo } from "react";
 import Buttons from "../../UI/Buttons";
 import { AllProducts } from "./AllProducts";
 
-const NavCat2 = () => {
+const NavCat2 = ({ Title, prop }) => {
   return (
     <div
       style={{ backgroundColor: "rgb(233,233,233,1)" }}
@@ -11,12 +11,9 @@ const NavCat2 = () => {
       <div className="container w-[100%] h-[100%]  flex items-center justify-between">
         <div className="Title flex ">
           <a className="pr-3 font-bold leading-5 text-[20px]  text-zinc-600   flex flex-row ">
-            Woman{" "}
+            {Title}
           </a>
-          <p className="text-[16px] leading-5 font-normal">
-            {" "}
-            {AllProducts.length} items
-          </p>
+          <p className="text-[16px] leading-5 font-normal"> {prop} </p>
         </div>
         <div className="containerbtn">
           <Buttons

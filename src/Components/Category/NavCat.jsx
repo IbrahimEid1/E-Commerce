@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import Home from "../../Pages/Home";
 import { ChevronRightIcon } from "lucide-react";
 import { memo } from "react";
 
-const NavCat = () => {
+const NavCat = ({ Title, Type }) => {
   return (
     <div className="w-[100%] h-[1vh] bg-white flex justify-center items-center mt-8">
       <div className="container w-[100%] h-[100%]  flex">
@@ -11,10 +10,10 @@ const NavCat = () => {
           Home <ChevronRightIcon className="w-4 h-4 text-gray-600 m-[3px]" />
         </Link>
         <a className="pr-3 text-[14px] leading-5 text-zinc-600  flex flex-row ">
-          Woman{" "}
+          {Title}
           <ChevronRightIcon className="w-4 h-4 text-[1.5px] text-gray-600 m-[3px]" />
         </a>
-        <a className="text-[14px] leading-5 text-zinc-600 ">Clothes</a>
+        <a className="text-[14px] leading-5 text-zinc-600 "> {Type} </a>
       </div>
     </div>
   );

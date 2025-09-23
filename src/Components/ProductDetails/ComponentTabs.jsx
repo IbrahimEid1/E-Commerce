@@ -9,10 +9,8 @@ const Tabs = () => {
 
   return (
     <div className="w-full flex flex-col max-w-full">
-      {/* Divider */}
       <hr className="w-[90%] mx-auto" />
 
-      {/* Tabs Header */}
       <div className="flex flex-wrap border-b w-full justify-center gap-6 sm:gap-12 lg:gap-24 text-sm sm:text-base">
         <button
           className={`px-2 sm:px-4 py-2 ${
