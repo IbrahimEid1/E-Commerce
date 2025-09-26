@@ -1,35 +1,39 @@
 import React, { memo, useContext } from "react";
-import { AllProducts } from "./AllProducts";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../context/ContextCart";
 import Heart from "../../UI/Heart";
 import Star from "../../UI/Stars";
 const MainContent = () => {
   const { AddToCart } = useContext(CartContext);
-  const { AddToFav } = useContext(CartContext);
+  const { AddToFav, Products } = useContext(CartContext);
 
   return (
     <div className="flashSales w-[100%] max-w-[70rem] h-[150vh]  mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
-      {AllProducts.map((items, idx) => (
+      {Products.map((items) => (
         <div
           className="Card flex h-[600px] flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
-          key={idx}
+          key={items.id}
         >
           <div className="ContainerImg flex justify-start p-3 sm:p-4 md:p-5 w-[100%] h-[200px] sm:h-[300px] md:h-[370px]">
             <Link
               to={`/Allproduct/${items.id}`}
-              className="w-[100%] h-[100%] object-cover rounded-lg"
-              style={items.bgColor}
-            />
+              className="w-[100%] h-[100%] object-cover rounded-lg flex justify-center items-center"
+            >
+              <img
+                src={items.image}
+                className="w-[80%] h-[68%] items-center"
+                alt=""
+              />
+            </Link>
           </div>
 
           <div className="container-footerFlash w-full p-3 sm:p-4 flex flex-col gap-2 items-start justify-start border-t border-gray-100">
             <div className="container-Brand w-full flex flex-col ">
               <p className="w-full text-xs sm:text-sm md:text-[12px] font-bold text-gray-900 line-clamp-2">
-                {items.title}
+                {items.title.slice(0, 50)}
               </p>
               <p className="text-xs sm:text-xs md:text-[10px] text-gray-600 line-clamp-3 flex flex-row w-full  items-center justify-between ">
-                {items.description}
+                {items.description.slice(0, 100)}
                 <Heart
                   onClick={() => {
                     AddToFav(items);

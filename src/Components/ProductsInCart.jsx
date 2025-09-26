@@ -1,9 +1,9 @@
 import { useContext, memo, useState } from "react";
 import { CartContext } from "../context/ContextCart";
-import { Handbag, X } from "lucide-react";
+import { Handbag, Trash, X } from "lucide-react";
 
 const CartMenu = () => {
-  const { cartCount } = useContext(CartContext);
+  const { cartCount, RemoveAll, removeItem } = useContext(CartContext);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,18 +18,31 @@ const CartMenu = () => {
             {cartCount.length ? (
               cartCount.map((item, index) => (
                 <div key={index} className="py-3 flex gap-3 items-center">
-                  <div
-                    style={item.bgColor}
+                  <img
+                    src={item.image}
+                    alt={item.title}
                     className="w-12 h-12 rounded-md flex-shrink-0 shadow-inner"
-                  ></div>
+                  />
                   <div className="flex-1">
                     <div className="text-sm font-semibold text-gray-800">
                       {item.title}
                     </div>
                     <div className="text-sm text-gray-500 mt-1">
-                      {item.price}
+                      ${item.price}
                     </div>
                   </div>
+                  {/* Badge للكمية */}
+                  <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                    {item.quantity}
+                  </span>
+                  <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                    <Trash
+                      onClick={() => {
+                        removeItem(item.id);
+                      }}
+                      width={15}
+                    />
+                  </span>
                 </div>
               ))
             ) : (
@@ -39,11 +52,17 @@ const CartMenu = () => {
               </div>
             )}
           </div>
+
           <div className="mt-4 flex gap-3">
             {cartCount.length ? (
               <>
-                <button className="flex-1 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700">
-                  View Bag
+                <button
+                  className="flex-1 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700"
+                  onClick={() => {
+                    RemoveAll("cart");
+                  }}
+                >
+                  Remove All
                 </button>
                 <button className="flex-1 py-2 rounded-md border border-gray-300 text-gray-800 font-medium hover:bg-gray-50">
                   Checkout
@@ -54,6 +73,7 @@ const CartMenu = () => {
         </div>
       </div>
 
+      {/* ===== Mobile Cart Drawer ===== */}
       {isOpen && (
         <div className="md:hidden fixed inset-0 z-50 flex">
           <div
@@ -75,18 +95,23 @@ const CartMenu = () => {
               {cartCount.length ? (
                 cartCount.map((item, index) => (
                   <div key={index} className="py-3 flex gap-3 items-center">
-                    <div
-                      style={item.bgColor}
+                    <img
+                      src={item.image}
+                      alt={item.title}
                       className="w-12 h-12 rounded-md flex-shrink-0 shadow-inner"
-                    ></div>
+                    />
                     <div className="flex-1">
                       <div className="text-sm font-semibold text-gray-800">
                         {item.title}
                       </div>
                       <div className="text-sm text-gray-500 mt-1">
-                        {item.price}
+                        ${item.price}
                       </div>
                     </div>
+                    {/* Badge للكمية */}
+                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      x{item.quantity}
+                    </span>
                   </div>
                 ))
               ) : (
@@ -100,7 +125,7 @@ const CartMenu = () => {
             {cartCount.length ? (
               <div className="mt-4 flex gap-3">
                 <button className="flex-1 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700">
-                  View Bag
+                  Remove ALL Products
                 </button>
                 <button className="flex-1 py-2 rounded-md border border-gray-300 text-gray-800 font-medium hover:bg-gray-50">
                   Checkout

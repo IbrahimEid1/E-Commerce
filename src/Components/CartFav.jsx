@@ -36,10 +36,9 @@ const CartFav = () => {
           </div>
           {CountFav.length ? (
             <>
-              {" "}
               <div className="mt-4 flex gap-3">
                 <button className="flex-1 py-2 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700">
-                  View Bag
+                  Remove All Product
                 </button>
                 <button className="flex-1 py-2 rounded-md border border-gray-300 text-gray-800 font-medium hover:bg-gray-50">
                   Checkout

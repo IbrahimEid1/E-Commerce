@@ -13,11 +13,12 @@ import FooterVisa from "./FooterVisa";
 import ProductSuggested from "./ProductSuggested";
 
 const ProductDetails = () => {
+  const { Products } = useContext(CartContext);
   const { id } = useParams();
-  const Products = AllProducts.find((item) => item.id === parseInt(id));
+  const Product = Products.find((item) => item.id === parseInt(id));
   const [quantity, setQuantity] = useState(1);
   const { AddToCart, AddToFav } = useContext(CartContext);
-  const [SelectedColor, setSelectedColor] = useState(Products.bgColor);
+  const [SelectedColor, setSelectedColor] = useState(Product.image);
   const Sizes = [
     {
       id: 1,
@@ -39,6 +40,7 @@ const ProductDetails = () => {
 
   const [selectedSize, setSelectedSize] = useState(null);
   console.log(selectedSize);
+  console.log(Product);
 
   return (
     <>
@@ -50,54 +52,51 @@ const ProductDetails = () => {
       <div className="flex flex-col lg:flex-row gap-4 md:gap-6 p-3 sm:p-4 md:p-6 max-w-7xl mx-auto">
         <div className="w-full lg:w-1/2 flex flex-col sm:flex-row gap-2 md:gap-4">
           <div className="flex sm:flex-col gap-2 order-2 sm:order-1">
-            <div
-              style={Products.bgColor}
-              className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0"
-            ></div>
-            <div
-              onClick={() => {
-                setSelectedColor({ backgroundColor: "purple" });
-              }}
-              style={{ backgroundColor: "purple" }}
-              className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0"
-            ></div>
-            <div
-              style={{ backgroundColor: "red" }}
-              className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0"
-              onClick={() => {
-                setSelectedColor({ backgroundColor: "red" });
-              }}
-            ></div>
-            <div
-              style={{ backgroundColor: "crimson" }}
-              onClick={() => {
-                setSelectedColor({ backgroundColor: "crimson" });
-              }}
-              className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0"
-            ></div>
+            {Products.slice(1, 5).map((item) => (
+              <div
+                className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0"
+                key={item.id}
+              >
+                <img
+                  src={item.image}
+                  alt=""
+                  onClick={() => setSelectedColor(item.image)}
+                />
+              </div>
+            ))}
+            <div className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0">
+              <img
+                src={Product.image}
+                alt=""
+                onClick={() => {
+                  setSelectedColor(Product.image);
+                }}
+              />
+            </div>
           </div>
 
           <div className="flex-1 order-1 sm:order-2">
             <div
-              style={SelectedColor}
               alt="product"
               className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg border"
-            ></div>
+            >
+              <img src={SelectedColor} alt="" />
+            </div>
           </div>
         </div>
 
         <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
           <div className="flex justify-between items-start gap-3">
             <h2 className="text-lg sm:text-xl md:text-2xl font-semibold leading-tight flex-1">
-              {Products.title}
+              {Product.title}
             </h2>
             <Heart
-              onClick={() => AddToFav(Products)}
+              onClick={() => AddToFav(Product)}
               className="flex-shrink-0"
             />
           </div>
 
-          <p className="text-xl sm:text-2xl font-bold">{Products.price}</p>
+          <p className="text-xl sm:text-2xl font-bold">{Product.price}</p>
 
           <div>
             <p className="text-sm mb-2 font-medium">Size</p>

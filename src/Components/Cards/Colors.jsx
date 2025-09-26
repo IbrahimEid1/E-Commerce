@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { ProductsColor } from "./ProductsColor";
-import { memo } from "react";
+import { memo, useContext } from "react";
+import { CartContext } from "../../context/ContextCart";
 const CardsColor = () => {
+  const { Products } = useContext(CartContext);
   return (
     <div className="ParentCards w-[100%] h-[auto] bg-gray-50 py-6 sm:py-8 md:py-12 px-3 sm:px-4 md:px-6 flex justify-start items-start flex-col">
       <div className="TitleParent w-[100%] max-w-6xl mx-auto flex items-center justify-between mb-8 sm:mb-10 md:mb-14 px-2 sm:px-4 md:px-0">
@@ -17,15 +18,15 @@ const CardsColor = () => {
       </div>
 
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0">
-        {ProductsColor.map((items, idx) => (
+        {Products.slice(5, 9).map((items, idx) => (
           <div
             className="Card flex flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
             key={idx}
           >
-            <div className="ContainerImg flex justify-start p-3 sm:p-4 md:p-5 w-[100%] h-[250px] sm:h-[300px] md:h-[370px]">
+            <div className="ContainerImg flex justify-center items-center p-3 sm:p-4 md:p-5 w-[100%] h-[250px] sm:h-[300px] md:h-[370px]">
               <img
-                className="w-[100%] h-[100%] object-cover rounded-lg"
-                style={items.bgColor}
+                className="w-70 h-40  object-cover  rounded-lg"
+                src={items.image}
               />
             </div>
 
@@ -35,31 +36,10 @@ const CardsColor = () => {
                   {items.title}
                 </p>
                 <p className="text-xs sm:text-xs md:text-[10px] text-gray-600 line-clamp-3">
-                  {items.description}
+                  {items.description.slice(0, 20)}
                 </p>
                 <div className="flex items-center mt-1">
-                  <div className="flex text-yellow-400">
-                    <img
-                      src={items.star}
-                      alt="star"
-                      className="w-3 h-3 sm:w-4 sm:h-4"
-                    />
-                    <img
-                      src={items.star}
-                      alt="star"
-                      className="w-3 h-3 sm:w-4 sm:h-4"
-                    />
-                    <img
-                      src={items.star}
-                      alt="star"
-                      className="w-3 h-3 sm:w-4 sm:h-4"
-                    />
-                    <img
-                      src={items.star}
-                      alt="star"
-                      className="w-3 h-3 sm:w-4 sm:h-4"
-                    />
-                  </div>
+                  <div className="flex text-yellow-400"></div>
                   <span className="text-xs text-gray-500 ml-1">(54)</span>
                 </div>
               </div>
