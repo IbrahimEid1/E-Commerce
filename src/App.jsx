@@ -7,6 +7,7 @@ import { AddCart } from "./context/ContextCart";
 import { Toaster } from "react-hot-toast";
 import ProductDetailsIphone from "./Components/ProductDetailsIphones/ProductDetailsIphone";
 import CategoryIphone from "./Pages/CategoryIphones";
+import CheckOut from "./Pages/CheckOut";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Blog" element={<Blog />} />
           <Route path="/Alliphone" element={<CategoryIphone />} />
           <Route path="/Alliphone/:id" element={<ProductDetailsIphone />} />
+          <Route path="/checkout" element={<CheckOut />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-center" reverseOrder={false} />

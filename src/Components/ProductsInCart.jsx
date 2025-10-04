@@ -1,6 +1,7 @@
 import { useContext, memo, useState } from "react";
 import { CartContext } from "../context/ContextCart";
 import { Handbag, Trash, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CartMenu = () => {
   const { cartCount, RemoveAll, removeItem } = useContext(CartContext);
@@ -64,9 +65,12 @@ const CartMenu = () => {
                 >
                   Remove All
                 </button>
-                <button className="flex-1 py-2 rounded-md border border-gray-300 text-gray-800 font-medium hover:bg-gray-50">
+                <Link
+                  to={"/checkout"}
+                  className="flex-1 py-2 rounded-md text-center border border-gray-300 text-gray-800 font-medium hover:bg-gray-50"
+                >
                   Checkout
-                </button>
+                </Link>
               </>
             ) : null}
           </div>

@@ -15,14 +15,6 @@ const NavCat2 = ({ Title, prop }) => {
           </a>
           <p className="text-[16px] leading-5 font-normal"> {prop} </p>
         </div>
-        <div className="containerbtn">
-          <Buttons
-            className={
-              "bg-transparent border-2 border-gray-700 w-[150px] h-[45px] rounded-md"
-            }
-            text={"Sort By Order "}
-          />
-        </div>
       </div>
     </div>
   );

@@ -9,16 +9,13 @@ export const AddCart = ({ children }) => {
   const [IsOpened, setIsOpen] = useState(false);
   const [IsOpenedFav, setIsOpenFav] = useState(false);
   const [Products, setProducts] = useState([]);
-
+  const [ProductTyped, setProductTyped] = useState([]);
+  const [shippingCost, setShippingCost] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const res = await fetch("https://fakestoreapi.com/products");
-        const data = await res.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      const res = await fetch("https://fakestoreapi.com/products");
+      const data = await res.json();
+      setProducts(data);
     };
 
     fetchData();
@@ -46,7 +43,6 @@ export const AddCart = ({ children }) => {
         );
       } else {
         toast.success(`Added to cart ${item.title}`);
-        setIsOpen(true);
         return [...prev, { ...item, quantity: 1 }];
       }
     });
@@ -56,7 +52,6 @@ export const AddCart = ({ children }) => {
     if (!CountFav.find((fav) => fav.id === item.id)) {
       setCountFav((prev) => [...prev, item]);
       toast.success(`Added to Favorites ${item.title}`);
-      setIsOpenFav(true);
     } else {
       toast.error(`${item.title} is already in favorites`);
     }
@@ -87,6 +82,10 @@ export const AddCart = ({ children }) => {
         AddToFav,
         RemoveAll,
         removeItem,
+        ProductsTyped: ProductTyped,
+        setProductTyped,
+        setShippingCost,
+        shippingCost,
       }}
     >
       {children}

@@ -19,7 +19,7 @@ const Cards = () => {
         </Link>
       </div>
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {Products.slice(0, 4).map((items, idx) => (
+        {Products.slice(15, 19).map((items, idx) => (
           <div
             className="Card flex flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
             key={idx}

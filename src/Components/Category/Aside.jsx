@@ -1,13 +1,14 @@
-import React, { memo, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import Inputs from "../../UI/Inputs";
+import { CartContext } from "../../context/ContextCart";
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { ProductTyped, setProductTyped } = useContext(CartContext);
   const toggleAside = () => {
     setIsOpen(!isOpen);
   };
-
+  const { setSortType } = useContext(CartContext);
   return (
     <>
       {/* Filter Button for Mobile */}
@@ -102,7 +103,7 @@ const Aside = () => {
               <li className="flex justify-between items-center text-gray-600">
                 <label className="flex items-center cursor-pointer flex-1 text-xs md:text-sm">
                   <input
-                    type="checkbox"
+                    onClick={() => setProductTyped((e) => e.target.value)}
                     className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
                   />
                   Short
@@ -328,11 +329,17 @@ const Aside = () => {
                 type="text"
                 className="border border-gray-300 rounded text-xs w-16 md:w-20 p-1"
                 defaultValue="$ 60"
+                onChange={(e) => {
+                  setSortType(e.target.value);
+                }}
               />
               <input
                 type="text"
                 className="border border-gray-300 rounded text-xs w-16 md:w-20 p-1"
                 defaultValue="$ 450"
+                onChange={(e) => {
+                  setSortType(e.target.value);
+                }}
               />
             </div>
             <div className="relative h-1 md:h-1.5 bg-gray-200 rounded mb-1 md:mb-2">
