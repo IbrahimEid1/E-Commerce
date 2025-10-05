@@ -8,7 +8,8 @@ import { Toaster } from "react-hot-toast";
 import ProductDetailsIphone from "./Components/ProductDetailsIphones/ProductDetailsIphone";
 import CategoryIphone from "./Pages/CategoryIphones";
 import CheckOut from "./Pages/CheckOut";
-
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 function App() {
   return (
     <AddCart>
@@ -21,6 +22,8 @@ function App() {
           <Route path="/Alliphone" element={<CategoryIphone />} />
           <Route path="/Alliphone/:id" element={<ProductDetailsIphone />} />
           <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-center" reverseOrder={false} />

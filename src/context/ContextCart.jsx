@@ -11,6 +11,7 @@ export const AddCart = ({ children }) => {
   const [Products, setProducts] = useState([]);
   const [ProductTyped, setProductTyped] = useState([]);
   const [shippingCost, setShippingCost] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("https://fakestoreapi.com/products");

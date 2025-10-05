@@ -8,11 +8,13 @@ import { memo, useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/ContextCart";
 import CartMenu from "../ProductsInCart";
 import CartFav from "../CartFav";
+import { Link } from "react-router-dom";
 const NavBlack = () => {
   const { cartCount } = useContext(CartContext);
   const { setIsOpen, IsOpened } = useContext(CartContext);
   const [isMobile, setIsMobile] = useState(false);
   const { setIsOpenFav, CountFav, IsOpenedFav } = useContext(CartContext);
+  const LogData = JSON.parse(localStorage.getItem("signup"));
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -57,10 +59,10 @@ const NavBlack = () => {
 
         <div className="profile">
           <ul className="flex justify-content-between space-x-10 mr-10">
-            <button className="flex profile-btn">
+            <Link to="/login" className="flex profile-btn">
               <img src={LoginIcon} alt="Login" />
-              Login
-            </button>
+              {LogData?.email}
+            </Link>
             <div
               className="flex mx-3 profile-btn"
               onClick={() => {
