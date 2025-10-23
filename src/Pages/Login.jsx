@@ -1,39 +1,29 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState(null);
-  const DataUser = JSON.parse(localStorage.getItem("signup"));
-  const navigate = useNavigate();
   const [FormLog, setFormLog] = useState({
-    email: "",
+    identifier: "",
     password: "",
   });
-  const handelLog = () => {
-    if (
-      DataUser?.email === FormLog.email &&
-      DataUser?.password === FormLog.password
-    ) {
-      alert("sucess");
-      navigate("/");
-    } else {
-      setError("Please Sign Up To Complete ");
-    }
-  };
+  const login = useLogin()
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
-    if (!FormLog.email || !FormLog.password) {
+    if (!FormLog.identifier || !FormLog.password) {
       setError("Please fill in all fields!");
       return;
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(FormLog.email)) {
+    if (!emailPattern.test(FormLog.identifier)) {
       setError("Please enter a valid email address!");
       return;
     }
@@ -42,7 +32,12 @@ export default function SignInForm() {
       setError("Password must be at least 6 characters!");
       return;
     }
-    handelLog();
+    login.mutate(FormLog, {
+      onSuccess: () => {
+        navigate("/")
+        
+      }
+    })
   };
   const handelOnChange = (e) => {
     const { name, value } = e.target;
@@ -59,8 +54,8 @@ export default function SignInForm() {
             <input
               type="email"
               placeholder="Email address"
-              value={FormLog.email}
-              name="email"
+              value={FormLog.identifier}
+              name="identifier"
               onChange={handelOnChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             />

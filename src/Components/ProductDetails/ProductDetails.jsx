@@ -1,7 +1,7 @@
 import Navbar from "../Nav/Navbar";
 import NavBlack from "../Nav/NavBlack";
 import NavCat from "../Category/NavCat";
-import { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { CirclePlus } from "lucide-react";
 import Heart from "../../UI/Heart";
 import { Link, useParams } from "react-router-dom";
@@ -10,23 +10,15 @@ import Tabs from "./ComponentTabs";
 import Footer from "./Footer";
 import FooterVisa from "./FooterVisa";
 import ProductSuggested from "./ProductSuggested";
+import { useFindOne } from "../../hooks/useFindOne";
+import { OrbitProgress } from "react-loading-indicators";
 
 const ProductDetails = () => {
-  const { id } = useParams();
+  const { documentId } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const { AddToCart, AddToFav } = useContext(CartContext);
+  const { AddToCart, AddToFav, basedUrl } = useContext(CartContext);
   const [SelectedColor, setSelectedColor] = useState(null);
-  const [ProductsId, setProductsId] = useState(null);
-
-  useEffect(() => {
-    const FetchId = async () => {
-      const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-      const data = await response.json();
-      setProductsId(data);
-      setSelectedColor(data.image);
-    };
-    FetchId();
-  }, [id]);
+  const { data, isLoading } = useFindOne(documentId)
 
   const Sizes = [
     { id: 1, size: "XL" },
@@ -37,8 +29,8 @@ const ProductDetails = () => {
 
   const [selectedSize, setSelectedSize] = useState(null);
 
-  if (!ProductsId) {
-    return <p className="text-center p-6">Loading...</p>;
+  if (isLoading) {
+    <OrbitProgress variant="split-disc" dense color="#23398c" size="medium" text="" textColor="" />
   }
 
   return (
@@ -50,15 +42,13 @@ const ProductDetails = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4 md:gap-6 p-3 sm:p-4 md:p-6 max-w-7xl mx-auto">
-        {/* الصور */}
         <div className="w-full lg:w-1/2 flex flex-col sm:flex-row gap-2 md:gap-4">
           <div className="flex sm:flex-col gap-2 order-2 sm:order-1">
-            {ProductsId.image && (
+            {`${data?.Image?.url}` && (
               <div className="w-16 h-20 sm:w-16 sm:h-20 md:w-20 md:h-24 object-cover rounded-md cursor-pointer border flex-shrink-0">
                 <img
-                  src={ProductsId.image}
-                  alt={ProductsId.title}
-                  onClick={() => setSelectedColor(ProductsId.image)}
+                  src={`${data?.Image?.url}`}
+                  onClick={() => setSelectedColor(`${data.Image.url}`)}
                 />
               </div>
             )}
@@ -66,29 +56,25 @@ const ProductDetails = () => {
 
           <div className="flex-1 order-1 sm:order-2">
             <div
-              alt="product"
-              className="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg border"
+              className=" sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg border"
             >
-              <img src={SelectedColor} alt={ProductsId.title} />
+              <img src={`${data?.Image?.url}`} className=" w-200 h-[100%] object-cover" />
             </div>
           </div>
         </div>
-
-        {/* التفاصيل */}
         <div className="w-full lg:w-1/2 space-y-4 md:space-y-6">
           <div className="flex justify-between items-start gap-3">
             <h2 className="text-lg sm:text-xl md:text-2xl font-semibold leading-tight flex-1">
-              {ProductsId.title}
+              {data?.name}
             </h2>
             <Heart
-              onClick={() => AddToFav(ProductsId)}
+              onClick={() => AddToFav(data)}
               className="flex-shrink-0"
             />
           </div>
 
-          <p className="text-xl sm:text-2xl font-bold">${ProductsId.price}</p>
+          <p className="text-xl sm:text-2xl font-bold"> ${data?.price}</p>
 
-          {/* المقاسات */}
           <div>
             <p className="text-sm mb-2 font-medium">Size</p>
             <div className="flex flex-wrap gap-2">
@@ -97,11 +83,10 @@ const ProductDetails = () => {
                   key={size.id}
                   onClick={() => setSelectedSize(size.id)}
                   className={`px-6 py-3 rounded-lg font-medium transition-colors duration-300
-                  ${
-                    selectedSize === size.id
+                  ${selectedSize === size.id
                       ? "bg-blue-600 text-white"
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                    }`}
                 >
                   {size.size}
                 </button>
@@ -118,7 +103,7 @@ const ProductDetails = () => {
                   key={index}
                   className="w-6 h-6 md:w-7 md:h-7 rounded-full cursor-pointer border-2 border-gray-300 hover:border-gray-500 transition-colors duration-200"
                   style={{ backgroundColor: color }}
-                  onClick={() => setSelectedColor(ProductsId.image)}
+                  onClick={() => setSelectedColor(data.Image.url)}
                 ></span>
               ))}
             </div>
@@ -154,7 +139,7 @@ const ProductDetails = () => {
 
           <div className="border p-4 bg-gray-50 rounded-lg">
             <p className="font-semibold text-lg md:text-xl text-gray-800">
-              ${(ProductsId.price * quantity).toFixed(2)}
+              ${(data?.price * quantity).toFixed(2)}
             </p>
             <div className="flex items-start gap-2 mt-2">
               <CirclePlus className="w-4 h-4 md:w-5 md:h-5 text-zinc-500 mt-0.5 flex-shrink-0" />
@@ -167,14 +152,14 @@ const ProductDetails = () => {
           {/* الأزرار */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              onClick={() => AddToCart(ProductsId)}
+              onClick={() => AddToCart(data)}
               to={"/checkout"}
               className="bg-blue-600 text-white px-6 md:px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-center font-medium"
             >
               SHOP NOW
             </Link>
             <button
-              onClick={() => AddToCart(ProductsId)}
+              onClick={() => AddToCart(data)}
               className="border border-gray-300 px-6 md:px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 font-medium"
             >
               ADD TO BASKET

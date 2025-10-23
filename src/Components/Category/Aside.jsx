@@ -4,14 +4,25 @@ import { CartContext } from "../../context/ContextCart";
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { ProductTyped, setProductTyped } = useContext(CartContext);
+  const { setSearchQuery, searchQuery, selectedCategories, setSelectedCategories, Products, setSortType } =
+    useContext(CartContext);
+
   const toggleAside = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
-  const { setSortType } = useContext(CartContext);
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  const categories = ["Casual", "Zara", "Electronic", "Rachel Pally", "Bag", "Ralph lauren", "NBB"];
+
   return (
     <>
-      {/* Filter Button for Mobile */}
       <button
         onClick={toggleAside}
         className="md:hidden fixed top-4 left-4 z-50 bg-blue-500 text-white p-3 rounded-full shadow-lg"
@@ -31,7 +42,7 @@ const Aside = () => {
         </svg>
       </button>
 
-      {/* Overlay for Mobile */}
+      {/* 🔹 خلفية شفافه عند فتح القائمة */}
       {isOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -39,29 +50,28 @@ const Aside = () => {
         ></div>
       )}
 
-      <div className="flex w-[100%] h-[80%]">
+      <div className="flex w-full h-[95%]">
         <aside
           className={`
-          ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-          md:translate-x-0 
-          fixed md:relative 
-          left-0 top-0 
-          w-[280px] md:w-[100%] 
-          h-full 
-          mt-0 md:mt-10 
-          bg-white 
-          p-3 md:p-5 
-          rounded-none md:rounded-lg 
-          shadow-none md:shadow-lg 
-          text-xs md:text-sm 
-          overflow-y-auto 
-          flex flex-col 
-          gap-3 md:gap-5
-          transition-transform duration-300 ease-in-out
-          z-50 md:z-auto
-          pt-16 md:pt-0
-        `}
+            ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+            md:translate-x-0 
+            fixed md:relative 
+            left-0 top-0 
+            w-[280px] md:w-full 
+            h-full 
+            bg-white 
+            p-3 md:p-5 
+            rounded-none md:rounded-lg 
+            text-xs md:text-sm 
+            overflow-y-auto 
+            flex flex-col 
+            gap-4 md:gap-5
+            transition-transform duration-300 ease-in-out
+            z-50 md:z-auto
+            pt-16 md:pt-0
+          `}
         >
+          {/* 🔹 زر الإغلاق في الموبايل */}
           <button
             onClick={toggleAside}
             className="md:hidden absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -81,245 +91,46 @@ const Aside = () => {
             </svg>
           </button>
 
+          {/* 🔹 العنوان */}
           <div className="flex items-center mb-3 md:mb-5">
             <span className="mr-2 text-sm md:text-base">☰</span>
-            <span className="text-sm md:text-base">All Categories</span>
+            <span className="text-sm md:text-base font-semibold text-gray-700">All Categories</span>
           </div>
 
+          {/* 🔹 البحث باسم المنتج */}
           <div className="mb-4 md:mb-6">
-            <div className="font-bold mb-2 md:mb-3 text-gray-800 text-xs md:text-sm">
-              BRAND
-            </div>
-            <div className="bg-purple-500 text-white px-2 py-1 rounded text-xs inline-block">
-              <Inputs></Inputs>
-            </div>
+            <input
+              type="text"
+              placeholder="Filter by name"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="border border-gray-300 rounded text-xs w-full p-2"
+            />
           </div>
 
-          <div className="mb-4 md:mb-6">
-            <div className="font-bold mb-2 md:mb-3 text-gray-800 text-xs md:text-sm">
-              MODEL
-            </div>
-            <ul className="space-y-1 md:space-y-2">
-              <li className="flex justify-between items-center text-gray-600">
-                <label className="flex items-center cursor-pointer flex-1 text-xs md:text-sm">
-                  <input
-                    onClick={() => setProductTyped((e) => e.target.value)}
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Short
-                </label>
-                <span className="text-gray-400 text-xs">(5)</span>
-              </li>
-              <li className="flex justify-between items-center text-gray-600">
-                <label className="flex items-center cursor-pointer flex-1 text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Mid-length
-                </label>
-                <span className="text-gray-400 text-xs">(3)</span>
-              </li>
-              <li className="flex justify-between items-center text-gray-600">
-                <label className="flex items-center cursor-pointer flex-1 text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Sweater
-                </label>
-                <span className="text-gray-400 text-xs">(6)</span>
-              </li>
-              <li className="flex justify-between items-center text-gray-600">
-                <label className="flex items-center cursor-pointer flex-1 text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Party Dresses
-                </label>
-                <span className="text-gray-400 text-xs">(8)</span>
-              </li>
-              <li className="flex justify-between items-center text-gray-600">
-                <label className="flex items-center cursor-pointer flex-1 text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Regular Fit
-                </label>
-                <span className="text-gray-400 text-xs">(12)</span>
-              </li>
-            </ul>
-          </div>
-
+          {/* 🔹 الفلترة بالأنواع (Checkbox) */}
           <div className="mb-4 md:mb-6">
             <div className="font-bold mb-2 md:mb-3 text-gray-800 text-xs md:text-sm">
               STYLE
             </div>
             <ul className="space-y-1 md:space-y-2">
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Casual
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Business Casual
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Bohemian
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Minimalist
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Chic
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Zara
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Gucci
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                    defaultChecked
-                  />
-                  Mango
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Ralph Lauren
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Calvin Klein
-                </label>
-              </li>
-              <li className="text-gray-600">
-                <label className="flex items-center cursor-pointer text-xs md:text-sm">
-                  <input
-                    type="checkbox"
-                    className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
-                  />
-                  Super Pink
-                </label>
-              </li>
+              {categories.map((category) => (
+                <li key={category} className="text-gray-600">
+                  <label className="flex items-center cursor-pointer text-xs md:text-sm">
+                    <input
+                      type="checkbox"
+                      className="mr-1 md:mr-2 w-3 h-3 md:w-4 md:h-4"
+                      checked={selectedCategories.includes(category)}
+                      onChange={() => handleCategoryChange(category)}
+                    />
+                    {category}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="mb-4 md:mb-6">
-            <div className="font-bold mb-2 md:mb-3 text-gray-800 text-xs md:text-sm">
-              COLOR
-            </div>
-            <div className="flex flex-wrap gap-1 md:gap-2">
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-blue-500 border-gray-800"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-red-500 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-green-500 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-orange-400 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-yellow-400 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-purple-500 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-pink-500 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-amber-800 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-gray-800 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-gray-400 border-transparent"></div>
-              <div className="w-4 h-4 md:w-5 md:h-5 rounded-full cursor-pointer border-2 bg-gray-100 border-gray-300"></div>
-            </div>
-          </div>
-
-          <div className="mb-4 md:mb-6">
-            <div className="font-bold mb-2 md:mb-3 text-gray-800 text-xs md:text-sm">
-              SIZE
-            </div>
-            <div className="flex flex-wrap gap-1 md:gap-2">
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                2XS
-              </div>
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                XS
-              </div>
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-blue-500 text-white border-blue-500">
-                S
-              </div>
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                M
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-1 md:gap-2 mt-1 md:mt-2">
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                L
-              </div>
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                XL
-              </div>
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                2XL
-              </div>
-              <div className="px-2 py-1 md:px-3 md:py-2 border rounded cursor-pointer text-xs bg-white border-gray-300">
-                3XL
-              </div>
-            </div>
-          </div>
-
+          {/* 🔹 الفلترة بالسعر */}
           <div className="mb-4 md:mb-6">
             <div className="font-bold mb-2 md:mb-3 text-gray-800 text-xs md:text-sm">
               PRICE
@@ -328,21 +139,17 @@ const Aside = () => {
               <input
                 type="text"
                 className="border border-gray-300 rounded text-xs w-16 md:w-20 p-1"
-                defaultValue="$ 60"
-                onChange={(e) => {
-                  setSortType(e.target.value);
-                }}
+                placeholder="$ Min"
+                onChange={(e) => setSortType(e.target.value)}
               />
               <input
                 type="text"
                 className="border border-gray-300 rounded text-xs w-16 md:w-20 p-1"
-                defaultValue="$ 450"
-                onChange={(e) => {
-                  setSortType(e.target.value);
-                }}
+                placeholder="$ Max"
+                onChange={(e) => setSortType(e.target.value)}
               />
             </div>
-            <div className="relative h-1 md:h-1.5 bg-gray-200 rounded mb-1 md:mb-2">
+            <div className="relative h-1 md:h-1.5 bg-gray-200 rounded mb-2">
               <div className="absolute h-full bg-blue-500 rounded left-[20%] right-[30%]"></div>
             </div>
             <div className="flex justify-between text-xs text-gray-400 mb-2 md:mb-3">
@@ -363,4 +170,5 @@ const Aside = () => {
     </>
   );
 };
+
 export default memo(Aside);

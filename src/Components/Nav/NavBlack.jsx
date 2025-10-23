@@ -1,97 +1,123 @@
-import "./NavBlack.css";
-import Cutomize from "../../assets/Men cosmetic.png";
-import LoginIcon from "../../assets/Sign in.png";
-import Icon from "../../assets/Vector.png";
-import Fav from "../../assets/Favorides.png";
-import Cart from "../../assets/Card.png";
-import { memo, useContext, useEffect, useState } from "react";
+import React, { memo, useContext, useState } from "react";
+import { ChevronDown, ShoppingCart, Heart, User, Menu } from "lucide-react";
 import { CartContext } from "../../context/ContextCart";
-import CartMenu from "../ProductsInCart";
+import DropdownUser from "../AddNewProduct/DropdownUser";
+import { useNavigate } from "react-router-dom";
 import CartFav from "../CartFav";
-import { Link } from "react-router-dom";
+import CartMenu from "../ProductsInCart";
+
 const NavBlack = () => {
-  const { cartCount } = useContext(CartContext);
-  const { setIsOpen, IsOpened } = useContext(CartContext);
-  const [isMobile, setIsMobile] = useState(false);
-  const { setIsOpenFav, CountFav, IsOpenedFav } = useContext(CartContext);
-  const LogData = JSON.parse(localStorage.getItem("signup"));
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+  // -------------------------------
+  // ✅ الحالات (States)
+  // -------------------------------
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isFavOpen, setIsFavOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
+  // بيانات المستخدم
+  const LogData = JSON.parse(localStorage.getItem("token"));
+  const userEmail = LogData?.user?.email || "Login";
+  const isLoggedIn = !!LogData?.jwt;
 
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  // -------------------------------
+  // ✅ الدوال (Handlers)
+  // -------------------------------
 
-  if (isMobile) {
-    return null;
-  }
+  const handleProfileToggle = () => {
+    if (isLoggedIn) {
+      setIsProfileOpen((prev) => !prev);
+      setIsFavOpen(false);
+      setIsCartOpen(false);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const handleFavToggle = () => {
+    setIsFavOpen((prev) => !prev);
+    setIsCartOpen(false);
+    setIsProfileOpen(false);
+    console.log(isFavOpen);
+    
+  };
+
+  const handleCartToggle = () => {
+    setIsCartOpen((prev) => !prev);
+    setIsFavOpen(false);
+    setIsProfileOpen(false);
+  };
+
+  // -------------------------------
+  // ✅ واجهة العرض (UI)
+  // -------------------------------
 
   return (
-    <div className="Parent responsive-navblack">
-      <div className="Child-Parent">
-        <div className="left-section">
-          <ul className="flex flex-row mr-10">
-            <div className="group">
-              <img src={Icon} className="Icon -space-x-20" alt="Categories" />
-              <li>Categories</li>
-            </div>
-            <li>USD</li>
-            <li>English</li>
-          </ul>
-        </div>
+    <div className="bg-gray-800 shadow-md sticky top-0 z-50 hidden md:block border-b border-gray-700">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
 
-        <div className="Line"></div>
+        {/* ---------------- Left: اللغة والتصنيفات ---------------- */}
+        <div className="flex items-center space-x-6 text-sm text-gray-300">
+          <div className="flex items-center space-x-2 cursor-pointer hover:text-white transition-colors">
+            <Menu className="w-4 h-4" />
+            <span className="font-medium">Categories</span>
+          </div>
 
-        <div className="cosmetic">
-          <img src={Cutomize} alt="Men's Cosmetics" className="img-customize" />
-          <div className="content">
-            <h1>Weekly Men's Toiletries Coupons.</h1>
-            <p>We extend exclusive discounts to our male clientele</p>
+          <span className="text-gray-600">|</span>
+
+          <div className="flex items-center space-x-4">
+            <span className="hover:text-white cursor-pointer transition-colors">USD</span>
+            <span className="hover:text-white cursor-pointer transition-colors flex items-center space-x-1">
+              English <ChevronDown className="w-3 h-3 ml-1" />
+            </span>
           </div>
         </div>
 
-        <div className="Line"></div>
+        {/* ---------------- Center: النص الترويجي ---------------- */}
+        <div className="flex items-center space-x-3">
+          <p className="text-xs font-medium text-green-400">
+            Weekly Men's Toiletries Coupons.
+          </p>
+        </div>
 
-        <div className="profile">
-          <ul className="flex justify-content-between space-x-10 mr-10">
-            <Link to="/login" className="flex profile-btn">
-              <img src={LoginIcon} alt="Login" />
-              {LogData?.email}
-            </Link>
-            <div
-              className="flex mx-3 profile-btn"
-              onClick={() => {
-                setIsOpenFav((prev) => !prev);
-                setIsOpen(false);
-              }}
-            >
-              <img src={Fav} alt="Favorites" />
-              <span>Favorites</span>
-              {IsOpenedFav ? <CartFav /> : null}
+        {/* ---------------- Right: عناصر المستخدم ---------------- */}
+        <div className="flex items-center space-x-6">
+          <ul className="flex items-center space-x-6">
+
+            {/* ---------------- User Dropdown ---------------- */}
+            <li className="relative">
+              <button
+                onClick={handleProfileToggle}
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                <User className="w-5 h-5" />
+                <span className="font-medium text-sm">{userEmail}</span>
+              </button>
+
+              {isProfileOpen && (
+                <div className="absolute top-full right-0 mt-2 z-[9999]">
+                  <DropdownUser />
+                </div>
+              )}
+            </li>
+
+            {/* ---------------- Favorites ---------------- */}
+               <Heart  onClick={handleFavToggle} className="cursor-pointer  text-white z-50">
+                {isFavOpen ? <CartFav /> : null}
+              </Heart>
+
+            {/* ---------------- Cart ---------------- */}
+            <div className="z-50">
+              <CartMenu />
             </div>
-            <div
-              className="flex mx-3 profile-btn cart-btn"
-              onClick={() => {
-                setIsOpen((prev) => !prev);
-                setIsOpenFav(false);
-              }}
-            >
-              {IsOpened ? <CartMenu /> : null}
-              <img src={Cart} alt="Cart" />
-              Cart
-              {cartCount.length ? (
-                <span className="circle bg-green-500 ">{cartCount.length}</span>
-              ) : null}
-            </div>
+
+
           </ul>
         </div>
       </div>
     </div>
   );
 };
+
 export default memo(NavBlack);

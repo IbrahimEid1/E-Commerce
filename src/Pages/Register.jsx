@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useRegister } from "../hooks/useRegister";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
   const [FormLog, setFormLog] = useState({
     username: "",
     email: "",
     password: "",
   });
+  const register =useRegister()
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    const newUser = { email: FormLog.email, password: FormLog.password };
+    const newUser = { username:FormLog.username , email: FormLog.email, password: FormLog.password };
     console.log(newUser);
+    
 
     if (!FormLog.email || !FormLog.password) {
       setError("Please fill in all fields!");
@@ -34,10 +36,18 @@ export default function Register() {
       setError("Password must be at least 6 characters!");
       return;
     }
-    localStorage.setItem("signup", JSON.stringify(newUser));
-
-    alert("Sign up successful!");
-    navigate("/login");
+ register.mutate(FormLog ,{
+  onSuccess:()=>{
+    navigate("/login")
+  },
+  onError:(err)=>{
+    console.log(err, "errror");
+    
+  }
+ })
+    // isError()  
+    
+   
   };
   const handelOnChange = (e) => {
     const { name, value } = e.target;

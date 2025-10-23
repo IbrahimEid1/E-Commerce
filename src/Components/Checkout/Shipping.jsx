@@ -11,6 +11,8 @@ export default function Shipping() {
   const [selectedPayment, setSelectedPayment] = useState("paypal");
   const [selectedShipping, setSelectedShipping] = useState("");
   const { setShippingCost } = useContext(CartContext);
+  const paying = [selectedPayment , selectedShipping]
+  localStorage.setItem("shipping" ,JSON.stringify(paying) )
 
   const paymentMethods = [
     {
@@ -43,6 +45,7 @@ export default function Shipping() {
       logo: logo1,
       delivery: "Delivery time: 14-21 days",
       cost: "Shipping cost: Free",
+      priceShipping: 0,
       insurance: "Insurance: Unavailable",
       insuranceColor: "text-red-500",
     },

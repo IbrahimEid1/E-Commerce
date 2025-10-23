@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { DataProductsSug } from "./DataProductsSug";
 import { CartContext } from "../../context/ContextCart";
 
 const ProductSuggested = () => {
-  const { AddToCart } = useContext(CartContext);
+  const { AddToCart, Products , basedUrl } = useContext(CartContext);
 
   return (
     <div className="w-full py-6 flex flex-col items-center text-black">
@@ -13,29 +12,29 @@ const ProductSuggested = () => {
         </h1>
 
         <div className="flex flex-wrap justify-center gap-6">
-          {DataProductsSug.map((pro) => (
+          {Products.slice(12,16 ).map((pro) => (
             <div
               className="flex flex-row items-center w-full sm:w-[48%] md:w-[32%] lg:w-[23%] h-[119px] justify-evenly border border-gray-200 rounded-md p-2"
               key={pro.id}
             >
               <img
-                src={pro.img}
-                alt={pro.title}
+                src={`${pro.Image.url}` }
+                alt={pro.name}
                 className="w-[100px] h-[100px] object-contain"
               />
 
               <div className="flex flex-col items-center justify-center gap-2">
-                <h1 className="text-sm font-bold text-center">{pro.title}</h1>
+                <h1 className="text-sm font-bold text-center">{pro.name}</h1>
 
                 <div className="flex flex-row gap-2 items-center justify-center">
                   <span className="text-sm font-bold text-red-500">
                     {pro.price}
                   </span>
                   <span className="text-sm font-bold text-zinc-500 line-through">
-                    {pro.oldPrice}
+                    {pro.price}
                   </span>
                   <span className="text-[9px] w-[30px] text-white font-bold p-1 rounded-[3px] bg-red-600 text-center">
-                    {pro.discount}
+                    {pro.price}
                   </span>
                 </div>
 
@@ -43,7 +42,7 @@ const ProductSuggested = () => {
                   onClick={() => AddToCart(pro)}
                   className="w-[158px] h-[36px] rounded-sm text-black font-medium border border-zinc-400 hover:bg-black hover:text-white transition"
                 >
-                  {pro.priceInBtn} Add to cart
+                  {pro.count} Add to cart
                 </button>
               </div>
             </div>

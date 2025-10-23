@@ -15,8 +15,7 @@ export const FedbackClients = [
       "The fabric used in this clothing line is of superior quality, providing a luxurious feel against the skin. It not only looks stunning but also feels incredibly comfortable to wear. The attention to detail in every stitch and seam is evident, making each piece a work of art.",
     images: {
       img1,
-      img2,
-    },
+      img2,    },
   },
   {
     title: "I was satisfied but...",

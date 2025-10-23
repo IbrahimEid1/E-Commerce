@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import Buttons from "../../UI/Buttons";
-import { Products } from "./Products";
+import { useTrending } from "../../hooks/useTrending";
+import { v4 as uuidv4 } from 'uuid';
+
 const Trending = () => {
+  const {data}= useTrending()
+  
   return (
     <div className="ParentTrending w-full min-h-[70vh] font-lato px-4">
       <div className="TitleParent w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 sm:mb-14 gap-4">
@@ -17,25 +21,22 @@ const Trending = () => {
       </div>
 
       <div className="Container-Cards w-full max-w-[85rem] mx-auto flex flex-wrap justify-center gap-11 ">
-        {Products.map((product) => (
+        {data?.map((product) => (
           <div
-            key={product.id}
+            key={uuidv4()}
             className="Card w-full sm:w-[48%] md:w-[31%] h-[450px] flex flex-col justify-between items-center rounded-md"
-            style={product.bgColor}
           >
-            <p className="flex items-center gap-1 px-2 py-1 bg-green-600 text-white text-[10px] rounded-md self-start mt-2 ml-2">
-              <img src={product.icon.NewArrive} alt="" className="w-4 h-4" />
-              {product.icon.title}
-            </p>
-
+            <div className="w-full h-[85%] flex object-cover">
+              <img src={`${product.Image.url}`} alt="" className="h-auto object-cover" />
+            </div>
             <div
               className="Container-Footer w-full h-20 flex justify-between items-center px-4"
               style={{ backgroundColor: "rgba(38,38,38,1)" }}
             >
               <div className="text text-gray-200 flex flex-col justify-between w-[60%] text-[14px]">
-                <p className="font-semibold">{product.footer.firstTitle}</p>
+                <p className="font-semibold">moha</p>
                 <p className="text-zinc-400 mt-2 text-[12px]">
-                  {product.footer.SecTitle}
+                 dsadas
                 </p>
               </div>
               <Buttons

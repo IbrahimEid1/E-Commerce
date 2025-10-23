@@ -3,30 +3,28 @@ import { CartContext } from "../../context/ContextCart";
 import ComponentsCards from "./CoponentsCards";
 import CustomerInformation from "./CustomerInformation";
 import Shipping from "./Shipping";
+import { useNavigate } from "react-router-dom";
 const ProductsCheckout = () => {
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
   const { cartCount } = useContext(CartContext);
-  const [active, setActive] = useState("Cards");
+  const {active, setActive} = useContext(CartContext);
   const { shippingCost } = useContext(CartContext);
 
   const subtotal = cartCount.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
+    (acc, item) => acc + parseFloat(item.price) + Number(shippingCost) * discount, 0
   );
   const giftBox = 10.9;
-  const total = subtotal + giftBox * discount - shippingCost;
-
   const handelDiscount = () => {
     if (discountCode === "Sale20") {
-      setDiscount(total - 0.2);
+      setDiscount(total * 0.2);
       setError("");
       setDisable(true);
       setDiscountCode("");
     } else if (discountCode === "Sale50") {
-      setDiscount(total - 0.15);
+      setDiscount(total * 0.50);
       setError("");
       setDisable(true);
       setDiscount("");
@@ -36,6 +34,9 @@ const ProductsCheckout = () => {
       setDisable(false);
     }
   };
+  const total = Number(subtotal) + Number(giftBox) - Number(shippingCost) - Number(discount)
+  const FinalTotal = total.toFixed(0)
+  const Navigate = useNavigate()
 
   return (
     <>
@@ -49,31 +50,28 @@ const ProductsCheckout = () => {
 
             <div className="flex flex-wrap border-b w-full justify-center gap-6 sm:gap-12 lg:gap-24 text-sm sm:text-base">
               <button
-                className={`px-2 sm:px-4 py-2 ${
-                  active === "Cards"
-                    ? "border-b-2 border-red-500 font-bold text-red-600"
-                    : "text-gray-600"
-                }`}
+                className={`px-2 sm:px-4 py-2 ${active === "Cards"
+                  ? "border-b-2 border-red-500 font-bold text-red-600"
+                  : "text-gray-600"
+                  }`}
                 onClick={() => setActive("Cards")}
               >
                 Cards
               </button>
               <button
-                className={`px-2 sm:px-4 py-2 ${
-                  active === "CustomerInformation"
-                    ? "border-b-2 border-red-500 font-bold text-red-600"
-                    : "text-gray-600"
-                }`}
+                className={`px-2 sm:px-4 py-2 ${active === "CustomerInformation"
+                  ? "border-b-2 border-red-500 font-bold text-red-600"
+                  : "text-gray-600"
+                  }`}
                 onClick={() => setActive("CustomerInformation")}
               >
                 CustomerInformation
               </button>
               <button
-                className={`px-2 sm:px-4 py-2 ${
-                  active === "ShippingPayment"
-                    ? "border-b-2 border-red-500 font-bold text-red-600"
-                    : "text-gray-600"
-                }`}
+                className={`px-2 sm:px-4 py-2 ${active === "ShippingPayment"
+                  ? "border-b-2 border-red-500 font-bold text-red-600"
+                  : "text-gray-600"
+                  }`}
                 onClick={() => setActive("ShippingPayment")}
               >
                 Shipping & Payment
@@ -83,6 +81,9 @@ const ProductsCheckout = () => {
             {/* Tabs Content */}
             <div className="p-4 sm:p-6 lg:p-8">
               {active === "Cards" && <ComponentsCards />}
+              {/* <div>
+                <button className="p-1 rounded-md bg-amber-500 text-white hover:bg-amber-700 transition">Compolete your Order</button>
+              </div> */}
               {active === "CustomerInformation" && <CustomerInformation />}
               {active === "ShippingPayment" && <Shipping />}
             </div>
@@ -95,7 +96,7 @@ const ProductsCheckout = () => {
 
           <div className="flex justify-between py-1">
             <span>Price</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>${subtotal}</span>
           </div>
           <div className="flex justify-between py-1">
             <span>Shipping</span>
@@ -120,10 +121,16 @@ const ProductsCheckout = () => {
 
           <div className="flex justify-between font-semibold text-lg">
             <span>Total Price</span>
-            <span>${total.toFixed(2)}</span>
+            <span>${FinalTotal}</span>
           </div>
 
-          <button className="w-full mt-4 bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
+          <button onClick={()=>{
+            if(active==="Cards"){
+               setActive("CustomerInformation")
+            }else if (active==="ShippingPayment") {
+              Navigate('/addnew')
+            }
+          }} className="w-full mt-4 bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
             🛒 CHECKOUT
           </button>
 

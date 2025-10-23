@@ -5,29 +5,35 @@ import Blog from "./Pages/Blog";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
 import { AddCart } from "./context/ContextCart";
 import { Toaster } from "react-hot-toast";
-import ProductDetailsIphone from "./Components/ProductDetailsIphones/ProductDetailsIphone";
-import CategoryIphone from "./Pages/CategoryIphones";
 import CheckOut from "./Pages/CheckOut";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import AddNew from "./Components/AddNewProduct/AddNew";
 function App() {
+  const queryClient = new QueryClient()
   return (
+        <QueryClientProvider client={queryClient}>
     <AddCart>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Allproduct" element={<Category />}></Route>
-          <Route path="/Allproduct/:id" element={<ProductDetails />} />
+          <Route path="/Allproduct/:documentId" element={<ProductDetails/>} />
           <Route path="/Blog" element={<Blog />} />
-          <Route path="/Alliphone" element={<CategoryIphone />} />
-          <Route path="/Alliphone/:id" element={<ProductDetailsIphone />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/addNew" element={<AddNew />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-center" reverseOrder={false} />
     </AddCart>
+      </QueryClientProvider>
+
   );
 }
 

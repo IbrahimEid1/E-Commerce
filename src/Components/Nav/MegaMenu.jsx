@@ -2,9 +2,11 @@ import { memo } from "react";
 
 const MegaMenu = () => {
   return (
-    <div className="relative bg-white">
-      <div className="absolute left-0 top-full w-[90%] max-w-[1067px] h-[50vh] bg-white shadow-lg rounded-lg flex p-6 z-50">
-        <div className="grid grid-cols-4 gap-6 w-[70%] max-w-[725px] h-[85%]">
+    <div className="relative">
+      {/* ✅ حطنا absolute تحت المينيو */}
+      <div className="absolute left-0 top-full w-[90%] max-w-[1067px] h-[50vh] bg-white shadow-xl rounded-lg flex p-6 z-40 border border-gray-100">
+        <div className="grid grid-cols-4 gap-6 w-[70%] max-w-[725px] h-[85%] overflow-y-auto">
+          {/* -------- عمود 1 -------- */}
           <div>
             <h3 className="font-semibold mb-3">Shoe & Bag</h3>
             <ul className="space-y-2 text-gray-600 text-sm">
@@ -22,6 +24,7 @@ const MegaMenu = () => {
             </ul>
           </div>
 
+          {/* -------- عمود 2 -------- */}
           <div>
             <h3 className="font-semibold mb-3">Home Textile</h3>
             <ul className="space-y-2 text-gray-600 text-sm">
@@ -39,6 +42,7 @@ const MegaMenu = () => {
             </ul>
           </div>
 
+          {/* -------- عمود 3 -------- */}
           <div>
             <h3 className="font-semibold mb-3">Party Supplies</h3>
             <ul className="space-y-2 text-gray-600 text-sm">
@@ -56,6 +60,7 @@ const MegaMenu = () => {
             </ul>
           </div>
 
+          {/* -------- عمود 4 -------- */}
           <div>
             <h3 className="font-semibold mb-3">Clothes</h3>
             <ul className="space-y-2 text-gray-600 text-sm">
@@ -74,7 +79,7 @@ const MegaMenu = () => {
           </div>
         </div>
 
-        {/* Right Image Section */}
+        {/* ✅ القسم الأيمن */}
         <div className="w-[30%] h-full flex items-center justify-center">
           <div className="w-[90%] h-[85%] bg-violet-600 rounded-lg"></div>
         </div>

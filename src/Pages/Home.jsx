@@ -9,16 +9,14 @@ import ComponentAds from "../Components/Ads/ComponentAds";
 import AdsPhones from "../Components/Ads/AdsPhones";
 import ComponentAdsTwo from "../Components/Ads/ComponentAdsTwo";
 import Footer from "../Components/Footer/Footer";
-import { useContext , memo } from "react";
-import { CartContext } from "../context/ContextCart";
+import {  memo } from "react"
+import Nav from "../Components/Nav/Nav";
 const Home = () => {
-  const { IsOpened, IsOpenedFav } = useContext(CartContext);
 
   return (
     <>
       <Navbar />
-      <NavBlack />
-      {IsOpened || IsOpenedFav ? null : <NavMenu />}
+      <Nav/>
       <HeroSection />
       <Cards />
       <Trending />

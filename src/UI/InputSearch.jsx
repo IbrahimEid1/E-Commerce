@@ -1,9 +1,5 @@
-import { useState } from "react";
-import { Search } from "lucide-react";
-
+import { CirclePlus, Search } from "lucide-react";
 const InputSearch = () => {
-  const [category, setCategory] = useState("All categories");
-
   const categories = [
     "All categories",
     "Electronics",
@@ -22,23 +18,18 @@ const InputSearch = () => {
 
       <div className="h-6 w-px bg-gray-300 text-sm"></div>
 
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="px-3 py-2 bg-transparent text-gray-600 focus:outline-none text-sm"
-      >
-        {categories.map((cat, index) => (
-          <option key={index} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
+      <button
+        className="px-3 py-2 bg-transparent flex items-center text-gray-600 focus:outline-none text-sm"
+    
+ >
+        Add New Product
 
-      <div className="h-6 w-px bg-gray-300 text-sm"></div>
-
-      <button className="px-3 text-gray-600 hover:text-indigo-600 text-sm">
-        <Search className="w-5 h-5" />
+      <div className="px-3 text-gray-600 hover:text-indigo-600 text-sm">
+        <CirclePlus  />   
+           </div>
       </button>
+
+
     </div>
   );
 };

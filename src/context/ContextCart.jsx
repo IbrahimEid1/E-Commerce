@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useGetdata } from "../hooks/useGetData";
 
 export const CartContext = createContext();
 
@@ -8,19 +9,36 @@ export const AddCart = ({ children }) => {
   const [CountFav, setCountFav] = useState([]);
   const [IsOpened, setIsOpen] = useState(false);
   const [IsOpenedFav, setIsOpenFav] = useState(false);
-  const [Products, setProducts] = useState([]);
-  const [ProductTyped, setProductTyped] = useState([]);
-  const [shippingCost, setShippingCost] = useState(0);
+  // const [Products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [shippingCost , setShippingCost] = useState(0)
+    const [active, setActive] = useState("Cards");
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("https://fakestoreapi.com/products");
-      const data = await res.json();
-      setProducts(data);
-    };
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useGetdata();
+  const Products = data?.pages.flatMap((page) => page.data) || [];
 
-    fetchData();
-  }, []);
+
+
+
+  const filteredProducts = Products.filter((product) => {
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(product?.attributes?.type) ||
+      selectedCategories.includes(product?.name);
+
+    const matchesSearch = product?.name
+      ?.toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
@@ -63,13 +81,22 @@ export const AddCart = ({ children }) => {
     if (key === "Fav") setCountFav([]);
     localStorage.removeItem(key);
   };
+
   const removeItem = (id) => {
     setCartCount((prev) => prev.filter((item) => item.id !== id));
     toast.success("Removed from cart");
   };
+
   return (
     <CartContext.Provider
       value={{
+        Products: filteredProducts,
+        setActive ,
+        active , 
+        setSearchQuery,
+        searchQuery,
+        selectedCategories,
+        setSelectedCategories,
         cartCount,
         setCartCount,
         CountFav,
@@ -78,15 +105,16 @@ export const AddCart = ({ children }) => {
         setIsOpen,
         IsOpenedFav,
         setIsOpenFav,
-        Products,
         AddToCart,
         AddToFav,
         RemoveAll,
         removeItem,
-        ProductsTyped: ProductTyped,
-        setProductTyped,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading, 
+        shippingCost, 
         setShippingCost,
-        shippingCost,
       }}
     >
       {children}
