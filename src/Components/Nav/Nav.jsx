@@ -7,7 +7,7 @@ const Nav = () => {
     <header className="w-full sticky top-0 z-50">
       <NavBlack />
       <div className="bg-white shadow-md border-b border-gray-200">
-        <NavMenu />
+        {/* <NavMenu /> */}
       </div>
     </header>
   );

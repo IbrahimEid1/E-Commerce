@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from "react";
+import React, { memo,useState } from "react";
 import { ChevronDown, ShoppingCart, Heart, User, Menu } from "lucide-react";
 import { CartContext } from "../../context/ContextCart";
 import DropdownUser from "../AddNewProduct/DropdownUser";
@@ -17,9 +17,11 @@ const NavBlack = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // بيانات المستخدم
-  const LogData = JSON.parse(localStorage.getItem("token"));
-  const userEmail = LogData?.user?.email || "Login";
-  const isLoggedIn = !!LogData?.jwt;
+  const LogData =localStorage.getItem("token");
+  const authData =JSON.parse(localStorage.getItem("user"));
+  const userEmail = authData?.user?.email || "Login";
+  
+  const isLoggedIn = !!LogData;
 
   // -------------------------------
   // ✅ الدوال (Handlers)
@@ -92,7 +94,7 @@ const NavBlack = () => {
                 className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <User className="w-5 h-5" />
-                <span className="font-medium text-sm">{userEmail}</span>
+                <span className="font-medium text-sm">{authData?.email||"Login"}</span>
               </button>
 
               {isProfileOpen && (

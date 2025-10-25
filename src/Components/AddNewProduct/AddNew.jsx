@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Plus, Package, Upload, X, Home, ShoppingBag, FileText, ShoppingCart, Menu, Bell, User } from 'lucide-react';
 import AllProductDashboard from './AllProductDashboard';
-import { useCreate } from "../../hooks/CreateNewProduct"
+import { useCreate } from "../../hooks/CreateNewProduct";
 import DropdownUser from './DropdownUser';
 import { Link } from 'react-router-dom';
 import AdminOrdersTable from './TableOrders';
+
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState('add-new');
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -14,19 +15,17 @@ export default function Dashboard() {
       description: '',
       price: '',
       OldPrice: '',
-      discount: "",
+      discount: '',
       Image: null,
-      rate: "",
-    }
+      rate: '',
+    },
   });
 
-  const create = useCreate()
+  const create = useCreate();
   const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  // دالة لتبديل حالة القائمة
- 
   const menuItems = [
     { id: 'home', name: 'Home', icon: Home },
     { id: 'all-products', name: 'All Products', icon: ShoppingBag },
@@ -37,89 +36,102 @@ export default function Dashboard() {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       data: {
         ...prev.data,
-        [name]: type === "number" ? (value === "" ? null : Number(value)) : value
-      }
+        [name]: type === "number" ? (value === "" ? null : Number(value)) : value,
+      },
     }));
 
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: '',
       }));
     }
   };
 
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     if (file.size > 5000000) {
-  //       setErrors(prev => ({
-  //         ...prev,
-  //         image: 'حجم الصورة يجب أن يكون أقل من 5 ميجا'
-  //       }));
-  //       return;
-  //     }
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5000000) {
+        setErrors((prev) => ({
+          ...prev,
+          image: 'Image size must be less than 5MB',
+        }));
+        return;
+      }
 
-  //     setFormData(prev => ({
-  //       ...prev,
-  //       image: file
-  //     }));
+      setFormData((prev) => ({
+        ...prev,
+        data: {
+          ...prev.data,
+          Image: file,
+        },
+      }));
 
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       setImagePreview(reader.result);
-  //     };
-  //     reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
 
-  //     if (errors.image) {
-  //       setErrors(prev => ({
-  //         ...prev,
-  //         image: ''
-  //       }));
-  //     }
-  //   }
-  // };
+      if (errors.image) {
+        setErrors((prev) => ({
+          ...prev,
+          image: '',
+        }));
+      }
+    }
+  };
 
   const removeImage = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      image: null
+      data: {
+        ...prev.data,
+        Image: null,
+      },
     }));
     setImagePreview(null);
   };
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    const form = new FormData();
+    form.append("files.Image", formData.data.Image);
+    form.append("data", JSON.stringify({
+      name: formData.data.name,
+      description: formData.data.description,
+      price: formData.data.price,
+      OldPrice: formData.data.OldPrice,
+      discount: formData.data.discount,
+      rate: formData.data.rate,
+    }));
 
-
-
-    console.log('Product Data:', formData);
-    alert('Product added successfully!');
-
-    // setFormData({
-    //   title: '',
-    //   description: '',
-    //   price: '',
-    //   oldPrice: '',
-    //   discountRate: '',
-    //   image: null ,
-    //   rate: ""
-    // });
-    setImagePreview(null);
     create.mutate(formData, {
-      onSuccess: () => console.log("Success")
-
-    })
-    console.log(formData);
-
+      onSuccess: () => {
+        alert("✅ Product added successfully!");
+        setFormData({
+          data: {
+            name: '',
+            description: '',
+            price: '',
+            OldPrice: '',
+            discount: '',
+            Image: null,
+            rate: '',
+          },
+        });
+        setImagePreview(null);
+      },
+      onError: (err) => {
+        console.error("❌ Error creating product:", err);
+        alert("Something went wrong while creating the product!");
+      },
+    });
   };
-
+  console.log(formData);
+  
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
@@ -144,10 +156,7 @@ export default function Dashboard() {
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
             <div className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer transition-colors">
-              <User className="w-5 h-5 text-gray-700" onClick={() => {
-                setIsOpen(!isOpen)
-
-              }} />
+              <User className="w-5 h-5 text-gray-700" onClick={() => setIsOpen(!isOpen)} />
               {isOpen && <DropdownUser />}
             </div>
           </div>
@@ -198,7 +207,8 @@ export default function Dashboard() {
                   <h2 className="text-3xl font-bold text-gray-800">Add New Product</h2>
                 </div>
 
-                <div className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Product Name */}
                   <div>
                     <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-2">
                       Product Name
@@ -209,15 +219,12 @@ export default function Dashboard() {
                       name="name"
                       value={formData.data.name}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.name ? 'border-red-500' : 'border-gray-200'
-                        }`}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       placeholder="iPhone 15 Pro"
                     />
-                    {errors.title && (
-                      <p className="mt-1 text-sm text-red-600">{errors.title}</p>
-                    )}
                   </div>
 
+                  {/* Description */}
                   <div>
                     <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
                       Description
@@ -228,15 +235,12 @@ export default function Dashboard() {
                       value={formData.data.description}
                       onChange={handleChange}
                       rows="4"
-                      className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none ${errors.description ? 'border-red-500' : 'border-gray-200'
-                        }`}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
                       placeholder="Enter product description..."
                     />
-                    {errors.description && (
-                      <p className="mt-1 text-sm text-red-600">{errors.description}</p>
-                    )}
                   </div>
 
+                  {/* Image */}
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Product Image
@@ -247,13 +251,12 @@ export default function Dashboard() {
                           type="file"
                           id="image"
                           accept="image/*"
-                          onChange={handleChange}
+                          onChange={handleImageChange}
                           className="hidden"
                         />
                         <label
                           htmlFor="image"
-                          className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer transition-colors hover:bg-gray-50 ${errors.image ? 'border-red-500' : 'border-gray-300'
-                            }`}
+                          className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                         >
                           <Upload className="w-12 h-12 text-gray-400 mb-2" />
                           <p className="text-sm text-gray-600 font-medium">Click to Upload</p>
@@ -268,6 +271,7 @@ export default function Dashboard() {
                           className="w-full h-48 object-cover rounded-lg"
                         />
                         <button
+                          type="button"
                           onClick={removeImage}
                           className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors"
                         >
@@ -275,11 +279,9 @@ export default function Dashboard() {
                         </button>
                       </div>
                     )}
-                    {errors.image && (
-                      <p className="mt-1 text-sm text-red-600">{errors.image}</p>
-                    )}
                   </div>
 
+                  {/* Price / Old Price */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="price" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -291,13 +293,9 @@ export default function Dashboard() {
                         name="price"
                         value={formData.data.price}
                         onChange={handleChange}
-                        className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.price ? 'border-red-500' : 'border-gray-200'
-                          }`}
+                        className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="0.00"
                       />
-                      {errors.price && (
-                        <p className="mt-1 text-sm text-red-600">{errors.price}</p>
-                      )}
                     </div>
 
                     <div>
@@ -306,67 +304,53 @@ export default function Dashboard() {
                       </label>
                       <input
                         type="number"
-                        id="oldPrice"
+                        id="OldPrice"
                         name="OldPrice"
                         value={formData.data.OldPrice}
                         onChange={handleChange}
-                        min="0"
-                        step="0.01"
-                        className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.oldPrice ? 'border-red-500' : 'border-gray-200'
-                          }`}
+                        className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="0.00"
                       />
-                      {errors.oldPrice && (
-                        <p className="mt-1 text-sm text-red-600">{errors.oldPrice}</p>
-                      )}
                     </div>
                   </div>
 
+                  {/* Discount / Rate */}
                   <div>
-                    <label htmlFor="discountRate" className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label htmlFor="discount" className="block text-sm font-semibold text-gray-700 mb-2">
                       Discount Rate (%)
                     </label>
                     <input
                       type="number"
-                      id="discountRate"
+                      id="discount"
                       name="discount"
                       value={formData.data.discount}
                       onChange={handleChange}
-
-                      className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.discountRate ? 'border-red-500' : 'border-gray-200'
-                        }`}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       placeholder="0"
                     />
-                    {errors.discountRate && (
-                      <p className="mt-1 text-sm text-red-600">{errors.discountRate}</p>
-                    )}
-                    <label htmlFor="Rate" className="block text-sm font-semibold text-gray-700 mb-2">
+
+                    <label htmlFor="rate" className="block text-sm font-semibold text-gray-700 mb-2 mt-4">
                       Rate
                     </label>
                     <input
                       type="number"
-                      id="discountRate"
+                      id="rate"
                       name="rate"
                       value={formData.data.rate}
                       onChange={handleChange}
-
-                      className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.discountRate ? 'border-red-500' : 'border-gray-200'
-                        }`}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       placeholder="0"
                     />
-                    {errors.discountRate && (
-                      <p className="mt-1 text-sm text-red-600">{errors.discountRate}</p>
-                    )}
                   </div>
 
                   <button
-                    onClick={handleSubmit}
+                    type="submit"
                     className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                   >
                     <Plus className="w-5 h-5" />
                     Add New Product
                   </button>
-                </div>
+                </form>
               </div>
             </div>
           )}
@@ -375,36 +359,25 @@ export default function Dashboard() {
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-2xl shadow-xl p-8">
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">Welcome to Dashboard</h2>
-                <Link to="/" className="text-red-600">GO TO HOME PAGE </Link>
+                <Link to="/" className="text-red-600">GO TO HOME PAGE</Link>
               </div>
             </div>
           )}
 
           {currentPage === 'all-products' && (
             <div className="max-w-4xl mx-auto">
-              <div className="bg-white rounded-2xl shadow-xl p-8 gap-4 flex  flex-col">
+              <div className="bg-white rounded-2xl shadow-xl p-8 gap-4 flex flex-col">
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">All Products</h2>
-                <p className="text-gray-600">Your products will appear here.</p>
                 <AllProductDashboard />
               </div>
             </div>
           )}
 
-          {currentPage === 'blog' && (
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">Blog</h2>
-                <p className="text-gray-600">Manage your blog posts here.</p>
-              </div>
-            </div>
-          )}
-
           {currentPage === 'checkout' && (
-            <div className="max-w-4xl mx-auto h-auto flex items-center ">
+            <div className="max-w-4xl mx-auto h-auto flex items-center">
               <div className="bg-white rounded-2xl shadow-xl p-8">
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">Checkout</h2>
-                <div className="text-gray-600"> <AdminOrdersTable/> </div>
-
+                <div className="text-gray-600"><AdminOrdersTable /></div>
               </div>
             </div>
           )}

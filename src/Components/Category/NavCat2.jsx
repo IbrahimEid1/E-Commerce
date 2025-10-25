@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import {X as CloseIcon,} from "lucide-react";
 import AddNew from "../AddNewProduct/AddNew";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
  const NavCat2 = ({ Title, prop }) => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
+    const [userRole, setUserRole] = useState()
+    useEffect(()=>{ 
+      setUserRole( JSON.parse(localStorage.getItem("user")))
+    },[])
   return (
     <div
       style={{ backgroundColor: "rgb(233,233,233,1)" }}
@@ -17,8 +21,9 @@ import { useNavigate } from "react-router-dom";
             {Title}
           </a>
           <p className="text-[16px] leading-5 font-normal"> {prop} </p>
-          <button className="p-3 text-white bg-blue-500 rounded-md" onClick={()=>setOpen(true)} >
-          Add New Product </button>
+          {userRole?.role?.name ==="Admin" ? <button className="p-3 text-white bg-blue-500 rounded-md" onClick={()=>{navigate("/addnew")}} > 
+          Add New Product </button> : null }
+
         </div>
       </div>
     {open && ( 

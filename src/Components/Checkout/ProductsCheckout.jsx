@@ -124,16 +124,10 @@ const ProductsCheckout = () => {
             <span>${FinalTotal}</span>
           </div>
 
-          <button onClick={()=>{
-            if(active==="Cards"){
-               setActive("CustomerInformation")
-            }else if (active==="ShippingPayment") {
-              Navigate('/addnew')
-            }
-          }} className="w-full mt-4 bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
+          <button className="w-full mt-4 bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
             🛒 CHECKOUT
           </button>
-
+                
           <div className="w-full h-[100px] flex flex-col justify-center">
             <div className="w-[95%] flex justify-end ">
               <input

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import right from "../../assets/left.png";
+import right from "../../assets/Img.jpg";
 import left from "../../assets/snapedit_1757551813844.jpg";
 import Buttons from "../../UI/Buttons";
 import { memo } from "react";

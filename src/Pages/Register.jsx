@@ -13,13 +13,14 @@ export default function Register() {
     email: "",
     password: "",
   });
-  const register =useRegister()
+
+  const register = useRegister()
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    const newUser = { username:FormLog.username , email: FormLog.email, password: FormLog.password };
+    const newUser = { username: FormLog.username, email: FormLog.email, password: FormLog.password };
     console.log(newUser);
-    
+
 
     if (!FormLog.email || !FormLog.password) {
       setError("Please fill in all fields!");
@@ -36,18 +37,18 @@ export default function Register() {
       setError("Password must be at least 6 characters!");
       return;
     }
- register.mutate(FormLog ,{
-  onSuccess:()=>{
-    navigate("/login")
-  },
-  onError:(err)=>{
-    console.log(err, "errror");
-    
-  }
- })
+    register.mutate(FormLog, {
+      onSuccess: () => {
+        navigate("/login")
+      },
+      onError: (err) => {
+        console.log(err, "errror");
+
+      }
+    })
     // isError()  
-    
-   
+
+
   };
   const handelOnChange = (e) => {
     const { name, value } = e.target;

@@ -13,26 +13,37 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import AddNew from "./Components/AddNewProduct/AddNew";
+import NoAccess from "./Components/NotAccess";
+import ProtectedRoutes from "./Components/ProtectedRoutes";
 function App() {
   const queryClient = new QueryClient()
+
   return (
-        <QueryClientProvider client={queryClient}>
-    <AddCart>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Allproduct" element={<Category />}></Route>
-          <Route path="/Allproduct/:documentId" element={<ProductDetails/>} />
-          <Route path="/Blog" element={<Blog />} />
-          <Route path="/checkout" element={<CheckOut />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/addNew" element={<AddNew />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster position="bottom-center" reverseOrder={false} />
-    </AddCart>
-      </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <AddCart>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Allproduct" element={<Category />}></Route>
+            <Route path="/Allproduct/:documentId" element={<ProductDetails />} />
+            <Route path="/Blog" element={<Blog />} />
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/noaccess" element={<NoAccess />} />
+            <Route
+              path="/addnew"
+              element={
+                <ProtectedRoutes>
+                  <AddNew />
+                </ProtectedRoutes>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+        <Toaster position="bottom-center" reverseOrder={false} />
+      </AddCart>
+    </QueryClientProvider>
 
   );
 }

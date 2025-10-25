@@ -9,7 +9,7 @@ export const AddCart = ({ children }) => {
   const [CountFav, setCountFav] = useState([]);
   const [IsOpened, setIsOpen] = useState(false);
   const [IsOpenedFav, setIsOpenFav] = useState(false);
-  // const [Products, setProducts] = useState([]);
+  const [userRole, setUserRole] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [shippingCost , setShippingCost] = useState(0)
@@ -51,6 +51,7 @@ export const AddCart = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartCount));
     localStorage.setItem("Fav", JSON.stringify(CountFav));
+
   }, [cartCount, CountFav]);
 
   const AddToCart = (item) => {
@@ -92,6 +93,8 @@ export const AddCart = ({ children }) => {
       value={{
         Products: filteredProducts,
         setActive ,
+        setUserRole, 
+        userRole,
         active , 
         setSearchQuery,
         searchQuery,
