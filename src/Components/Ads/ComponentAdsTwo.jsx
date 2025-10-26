@@ -9,8 +9,6 @@ const ComponentAdsTwo = () => {
   return (
     <div className="w-full h-auto min-h-[50.9vh] sm:h-[45vh] md:h-[50vh] lg:h-[50.9vh] flex flex-col lg:flex-row justify-center lg:justify-evenly items-center lg:items-stretch rounded-md mt-12 sm:mt-16 md:mt-20 lg:mt-24 gap-4 lg:gap-0 p-4 lg:p-0">
       {data?.map((item, index) => {
-     
-        
         return (
           <div
             key={uuidv4()}

@@ -18,7 +18,6 @@ import CartMenu from "../ProductsInCart";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
-    cartCount,
     setIsOpen: setCartOpen,
     IsOpened,
   } = useContext(CartContext);
@@ -60,17 +59,21 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
           <InputSearch />
           <List />
-        
+
         </div>
 
         <div className="w-40 h-auto  md:flex gap-4 text-gray-600">
-          <Instagram />
-          <Facebook />
+          <div className="flex items-center space-x-4">
+            <div className="hidden sm:flex items-center space-x-3">
+              <Facebook className="w-5 h-5 text-gray-400 hover:text-blue-600 cursor-pointer" />
+              <Twitter className="w-5 h-5 text-gray-400 hover:text-blue-400 cursor-pointer" />
+              <Instagram className="w-5 h-5 text-gray-400 hover:text-pink-600 cursor-pointer" />
+            </div>
+          </div>
           <div
             className="relative cursor-pointer"
             onClick={() => setCartOpen((prev) => !prev)}
           >
-              <Twitter/>
           </div>
         </div>
 
@@ -81,7 +84,7 @@ const Navbar = () => {
           aria-label="Toggle menu"
         >
           {isOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
-          
+
         </button>
       </div>
 
@@ -127,12 +130,15 @@ const Navbar = () => {
             <List />
           </div>
 
-       
+
           <div className="px-4 py-3">
             <h3 className="font-semibold text-gray-700 mb-2">Follow Us</h3>
-            <div className="flex gap-4 text-gray-600">
-              <Instagram />
-              <Facebook />
+            <div className="flex items-center space-x-4">
+              <div className="hidden sm:flex items-center space-x-3">
+                <Facebook className="w-5 h-5 text-gray-400 hover:text-blue-600 cursor-pointer" />
+                <Twitter className="w-5 h-5 text-gray-400 hover:text-blue-400 cursor-pointer" />
+                <Instagram className="w-5 h-5 text-gray-400 hover:text-pink-600 cursor-pointer" />
+              </div>
             </div>
           </div>
         </div>

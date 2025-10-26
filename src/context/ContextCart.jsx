@@ -12,9 +12,8 @@ export const AddCart = ({ children }) => {
   const [userRole, setUserRole] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [shippingCost , setShippingCost] = useState(0)
-    const [active, setActive] = useState("Cards");
-  
+  const [shippingCost, setShippingCost] = useState(0);
+  const [active, setActive] = useState("Cards");
 
   const {
     data,
@@ -23,10 +22,8 @@ export const AddCart = ({ children }) => {
     isFetchingNextPage,
     isLoading,
   } = useGetdata();
+
   const Products = data?.pages.flatMap((page) => page.data) || [];
-
-
-
 
   const filteredProducts = Products.filter((product) => {
     const matchesCategory =
@@ -40,20 +37,22 @@ export const AddCart = ({ children }) => {
     return matchesCategory && matchesSearch;
   });
 
+  // ✅ استرجاع البيانات من التخزين عند أول تحميل
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
+    const savedCart = sessionStorage.getItem("cart");
     const savedFav = localStorage.getItem("Fav");
 
     if (savedCart) setCartCount(JSON.parse(savedCart));
     if (savedFav) setCountFav(JSON.parse(savedFav));
   }, []);
 
+  // ✅ حفظ البيانات عند أي تحديث
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartCount));
+    sessionStorage.setItem("cart", JSON.stringify(cartCount));
     localStorage.setItem("Fav", JSON.stringify(CountFav));
-
   }, [cartCount, CountFav]);
 
+  // ✅ إضافة منتج للكارت
   const AddToCart = (item) => {
     setCartCount((prev) => {
       const existingItem = prev.find((p) => p.id === item.id);
@@ -62,12 +61,13 @@ export const AddCart = ({ children }) => {
           p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
         );
       } else {
-        toast.success(`Added to cart ${item.title}`);
+        toast.success(`Added to cart ${item.name}`);
         return [...prev, { ...item, quantity: 1 }];
       }
     });
   };
 
+  // ✅ إضافة للمفضلة
   const AddToFav = (item) => {
     if (!CountFav.find((fav) => fav.id === item.id)) {
       setCountFav((prev) => [...prev, item]);
@@ -77,12 +77,19 @@ export const AddCart = ({ children }) => {
     }
   };
 
+  // ✅ إزالة كل العناصر من الكارت أو الفيفوريتس
   const RemoveAll = (key) => {
-    if (key === "cart") setCartCount([]);
-    if (key === "Fav") setCountFav([]);
-    localStorage.removeItem(key);
+    if (key === "cart") {
+      setCartCount([]);
+      sessionStorage.removeItem("cart");
+    }
+    if (key === "Fav") {
+      setCountFav([]);
+      localStorage.removeItem("Fav");
+    }
   };
 
+  // ✅ إزالة عنصر واحد من الكارت
   const removeItem = (id) => {
     setCartCount((prev) => prev.filter((item) => item.id !== id));
     toast.success("Removed from cart");
@@ -92,10 +99,10 @@ export const AddCart = ({ children }) => {
     <CartContext.Provider
       value={{
         Products: filteredProducts,
-        setActive ,
-        setUserRole, 
+        setActive,
+        setUserRole,
         userRole,
-        active , 
+        active,
         setSearchQuery,
         searchQuery,
         selectedCategories,
@@ -115,8 +122,8 @@ export const AddCart = ({ children }) => {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-        isLoading, 
-        shippingCost, 
+        isLoading,
+        shippingCost,
         setShippingCost,
       }}
     >

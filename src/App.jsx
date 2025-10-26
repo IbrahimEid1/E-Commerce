@@ -15,6 +15,7 @@ import {
 import AddNew from "./Components/AddNewProduct/AddNew";
 import NoAccess from "./Components/NotAccess";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
+import NotFound from "./Components/PageNotFound";
 function App() {
   const queryClient = new QueryClient()
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/noaccess" element={<NoAccess />} />
+            <Route path="*" element={<NotFound/>}/>
             <Route
               path="/addnew"
               element={
