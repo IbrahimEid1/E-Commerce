@@ -1,4 +1,5 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+
 import { CartContext } from "../../context/ContextCart";
 import ComponentsCards from "./CoponentsCards";
 import CustomerInformation from "./CustomerInformation";
@@ -10,11 +11,19 @@ const ProductsCheckout = () => {
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
   const { cartCount } = useContext(CartContext);
-  const {active, setActive} = useContext(CartContext);
+  const { active, setActive } = useContext(CartContext);
   const { shippingCost } = useContext(CartContext);
+  const [disabled, setDisabled] = useState(false)
 
+  useEffect(() => {
+    if (cartCount.length === 0) {
+      setDisabled(false)
+    } else if (cartCount.length > 0) {
+      setDisabled(true)
+    }
+  }, [cartCount])
   const subtotal = cartCount.reduce(
-    (acc, item) => acc + parseFloat(item.price) + Number(shippingCost) * discount, 0
+    (acc, item) => acc + parseFloat(item.price) + Number() * discount, 0
   );
   const giftBox = 10.9;
   const handelDiscount = () => {
@@ -37,7 +46,17 @@ const ProductsCheckout = () => {
   const total = Number(subtotal) + Number(giftBox) - Number(shippingCost) - Number(discount)
   const FinalTotal = total.toFixed(0)
   const Navigate = useNavigate()
+  const ConvertAndChecked = () => {
+    if (active === "Cards" && cartCount.length === 0) {
+      Navigate("/allproduct")
+    }
+    else if (active === "Cards" && cartCount.length > 0) {
+      setActive("CustomerInformation")
 
+    } else if (active === "CustomerInformation") {
+      setActive("ShippingPayment")
+    }
+  }
   return (
     <>
       <div className="flex flex-col md:flex-row justify-center gap-6 p-6 items-start flex-wrap">
@@ -50,27 +69,34 @@ const ProductsCheckout = () => {
 
             <div className="flex flex-wrap border-b w-full justify-center gap-6 sm:gap-12 lg:gap-24 text-sm sm:text-base">
               <button
-                className={`px-2 sm:px-4 py-2 ${active === "Cards"
+                className={`px-2 sm:px-4 py-2 ${active === "ShippingPayment"
                   ? "border-b-2 border-red-500 font-bold text-red-600"
-                  : "text-gray-600"
+                  : disabled
+                    ? "text-gray-700 hover:text-red-600 hover:border-b-2 hover:border-red-500"
+                    : "text-gray-400 bg-gray-100 cursor-not-allowed opacity-60"
                   }`}
                 onClick={() => setActive("Cards")}
               >
                 Cards
               </button>
-              <button
-                className={`px-2 sm:px-4 py-2 ${active === "CustomerInformation"
+              <button disabled={disabled === false ? "Required Data" : null}
+                className={`px-2 sm:px-4 py-2 ${active === "ShippingPayment"
                   ? "border-b-2 border-red-500 font-bold text-red-600"
-                  : "text-gray-600"
+                  : disabled
+                    ? "text-gray-700 hover:text-red-600 hover:border-b-2 hover:border-red-500"
+                    : "text-gray-400 bg-gray-100 cursor-not-allowed opacity-60"
                   }`}
                 onClick={() => setActive("CustomerInformation")}
               >
                 CustomerInformation
               </button>
               <button
+                disabled={disabled === false ? "Required Data" : null}
                 className={`px-2 sm:px-4 py-2 ${active === "ShippingPayment"
                   ? "border-b-2 border-red-500 font-bold text-red-600"
-                  : "text-gray-600"
+                  : disabled
+                    ? "text-gray-700 hover:text-red-600 hover:border-b-2 hover:border-red-500"
+                    : "text-gray-400 bg-gray-100 cursor-not-allowed opacity-60"
                   }`}
                 onClick={() => setActive("ShippingPayment")}
               >
@@ -124,10 +150,10 @@ const ProductsCheckout = () => {
             <span>${FinalTotal}</span>
           </div>
 
-          <button className="w-full mt-4 bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
+          <button onClick={ConvertAndChecked} className="w-full mt-4 bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
             🛒 CHECKOUT
           </button>
-                
+
           <div className="w-full h-[100px] flex flex-col justify-center">
             <div className="w-[95%] flex justify-end ">
               <input

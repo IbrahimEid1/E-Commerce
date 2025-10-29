@@ -4,22 +4,25 @@ import Select from "react-select";
 import { Country, City } from "country-state-city";
 import { useForm } from "react-hook-form";
 import { CartContext } from "../../context/ContextCart";
+import useOrderCustomer from "../../hooks/OrderCustomer";
 
 function CustomerInformation() {
-  const { handleSubmit, register, getValues,formState:{ errors } } = useForm();
-  const { setActive} = useContext(CartContext);
-
+  const { handleSubmit, register, getValues, formState: { errors } } = useForm();
+  const { setActive, cartCount ,selectedShipping  } = useContext(CartContext);
+const CustomerOrder = useOrderCustomer()
   const options = countryList().getData();
+  const [orders, setOrders] = useState([]);
+
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [Customer , setCustomer] = useState({
-    firstName:"" , 
-    email: "", 
-    lastName:"" ,
-    address:"" ,
-     country: selectedCountry?.label,
-      city: selectedCity?.label, 
-     })
+  const [Customer, setCustomer] = useState({
+    firstName: "",
+    email: "",
+    lastName: "",
+    address: "",
+    country: selectedCountry?.label,
+    city: selectedCity?.label,
+  })
 
   const countryOptions = Country.getAllCountries().map((c) => ({
     value: c.isoCode,
@@ -29,22 +32,43 @@ function CustomerInformation() {
 
   const cityOptions = selectedCountry
     ? City.getCitiesOfCountry(selectedCountry.value)?.map((city) => ({
-        value: city.name,
-        label: city.name,
-      }))
+      value: city.name,
+      label: city.name,
+    }))
     : [];
-
-const onSubmit = (data) => {
+ const onSubmit = (data) => {
   const newCustomer = {
     ...data,
     country: selectedCountry?.label,
     city: selectedCity?.label,
   };
-  const existingData = JSON.parse(localStorage.getItem("DataCustomer")) || [];
 
-  const updatedData = [...existingData, newCustomer];
-  localStorage.setItem("DataCustomer", JSON.stringify(updatedData));
-  setActive("ShippingPayment");
+  const NewOrder = {
+    data: {
+      firstName: newCustomer.firstName,
+      lastName: newCustomer.lastName,
+      email: newCustomer.email,
+      phone: newCustomer.phone,
+      address: newCustomer.address,
+      country: newCustomer.country,
+      city: newCustomer.city,
+      categories: cartCount.map((item) => item.id), 
+    },
+  };
+
+  console.log(NewOrder);
+
+  CustomerOrder.mutate(NewOrder, {
+    onSuccess: (res) => {
+      alert("✅ Order created successfully!");
+      console.log("Response:", res);
+      setActive("ShippingPayment");
+    },
+    onError: (err) => {
+      console.error("❌ Error:", err);
+      alert("Failed to create order");
+    },
+  });
 };
 
   return (
@@ -95,9 +119,9 @@ const onSubmit = (data) => {
               <input
                 type="tel"
                 className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                {...register("phone",  {required:"Please Enter Your Phone"})  } 
-                />
-                {errors.phone && (
+                {...register("phone", { required: "Please Enter Your Phone" })}
+              />
+              {errors.phone && (
                 <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
               )}
             </div>
@@ -140,7 +164,7 @@ const onSubmit = (data) => {
                 <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>
               )}
             </div>
-          </div>  
+          </div>
         </section>
 
         {/* SUBMIT BUTTON */}

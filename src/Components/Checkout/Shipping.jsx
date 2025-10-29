@@ -9,8 +9,7 @@ import Bitcoin from "../../../public/Bitcoin.png";
 import { CartContext } from "../../context/ContextCart";
 export default function Shipping() {
   const [selectedPayment, setSelectedPayment] = useState("paypal");
-  const [selectedShipping, setSelectedShipping] = useState("");
-  const { setShippingCost } = useContext(CartContext);
+  const { setShippingCost , setSelectedShipping , selectedShipping } = useContext(CartContext);
   const paying = [selectedPayment , selectedShipping]
   localStorage.setItem("shipping" ,JSON.stringify(paying) )
 
@@ -130,7 +129,7 @@ export default function Shipping() {
 
           <div className="space-y-4">
             {shippingMethods.map((method) => (
-              <div
+              <div 
                 key={method.id}
                 onClick={() => {
                   setSelectedShipping(method.id);

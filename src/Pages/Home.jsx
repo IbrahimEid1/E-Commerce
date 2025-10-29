@@ -9,10 +9,13 @@ import ComponentAds from "../Components/Ads/ComponentAds";
 import AdsPhones from "../Components/Ads/AdsPhones";
 import ComponentAdsTwo from "../Components/Ads/ComponentAdsTwo";
 import Footer from "../Components/Footer/Footer";
-import {  memo } from "react"
+import {  memo, useContext } from "react"
 import Nav from "../Components/Nav/Nav";
+import { CartContext } from "../context/ContextCart";
+import Loading from "../Components/Loading";
 const Home = () => {
-
+const {isLoading} = useContext(CartContext)
+if (isLoading) return <Loading/>
   return (
     <>
       <Navbar />

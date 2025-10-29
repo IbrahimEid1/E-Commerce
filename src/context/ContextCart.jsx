@@ -13,6 +13,8 @@ export const AddCart = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [shippingCost, setShippingCost] = useState(0);
+  const [selectedShipping, setSelectedShipping] = useState("transoCargo");
+  
   const [active, setActive] = useState("Cards");
 
   const {
@@ -20,7 +22,7 @@ export const AddCart = ({ children }) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
+    isLoading
   } = useGetdata();
 
   const Products = data?.pages.flatMap((page) => page.data) || [];
@@ -99,8 +101,10 @@ export const AddCart = ({ children }) => {
     <CartContext.Provider
       value={{
         Products: filteredProducts,
+        selectedShipping,
         setActive,
         setUserRole,
+        setSelectedShipping,
         userRole,
         active,
         setSearchQuery,

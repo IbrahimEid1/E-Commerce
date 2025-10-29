@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
+import useFindOrders from "../../hooks/useFindOrders";
+import UserDataSpinner from "./Spinner";
 
 export default function AdminOrdersTable() {
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [shipping, setShipping] = useState([]);
+  const { data, isLoading, isError } = useFindOrders();
 
   useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem("DataCustomer")) || [];
-    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+
     const savedShipping = JSON.parse(localStorage.getItem("shipping")) || [];
 
-    setOrders(savedOrders);
-    setProducts(savedCart);
+    setOrders(data);
+    setProducts(data?.categories);
     setShipping(savedShipping);
-  }, []);
-
-  if (orders.length === 0)
+  }, [data]);
+  if (isLoading) {
+    return <UserDataSpinner />
+  }
+  else if (!data?.data || data?.data?.length === 0)
     return (
       <div className="p-6 text-center text-gray-500">
         🚫 لا يوجد طلبات حتى الآن
       </div>
     );
+
+  console.log(data);
 
   return (
     <div className="p-6 bg-white shadow-lg rounded-lg overflow-x-auto">
@@ -31,23 +37,20 @@ export default function AdminOrdersTable() {
           <tr>
             <th className="p-3 border">اسم العميل</th>
             <th className="p-3 border">البريد الإلكتروني</th>
-            <th className="p-3 border"> العنوان </th>
-            <th className="p-3 border"> المحافظة</th>
-            <th className="p-3 border"> رقم الهاتف</th>
+            <th className="p-3 border">العنوان</th>
+            <th className="p-3 border">المحافظة</th>
+            <th className="p-3 border">رقم الهاتف</th>
 
             <th className="p-3 border">المنتج</th>
-            <th className="p-3 border">صورة المنتج</th>
             <th className="p-3 border">السعر</th>
-            <th className="p-3 border">طريقة الشحن</th>
-
-            <th className="p-3 border"> نسبة الخصم</th>
+            <th className="p-3 border">السعر القديم</th>
+            <th className="p-3 border">نسبة الخصم</th>
           </tr>
         </thead>
 
         <tbody>
-          {orders.map((item, index) => {
-            const product = products[index] || {}; 
-            const ship = shipping[index] || {}; 
+          {data?.data?.map((item, index) => {
+            const Product = item?.categories?.[0] || {};
 
             return (
               <tr key={index} className="text-center hover:bg-gray-50">
@@ -55,31 +58,20 @@ export default function AdminOrdersTable() {
                   {item.firstName} {item.lastName}
                 </td>
                 <td className="p-2 border">{item.email}</td>
-                <td className="p-2 border">{item.country}</td>
+                <td className="p-2 border">{item.address}</td>
                 <td className="p-2 border">{item.city}</td>
                 <td className="p-2 border">{item.phone}</td>
 
-                {/* المنتج */}
-                <td className="p-2 border">{product.name || "—"}</td>
-                <td className="p-2 border flex justify-center">
-                  {product?.Image?.url ? (
-                    <img
-                      src={product.Image.url}
-                      alt={product.name}
-                      className="w-12 h-12 object-cover rounded"
-                    />
-                  ) : (
-                    <span>—</span>
-                  )}
-                </td>
-
+                <td className="p-2 border">{Product.name || "—"}</td>
                 <td className="p-2 border text-green-600 font-semibold">
-                  {product.price ? `$${product.price}` : "—"}
+                  {Product.price ? `$${Product.price}` : "—"}
                 </td>
-
-                <td className="p-2 border">{ship[0] || "—"}</td>
-
-                <td className="p-2 border">{ship[1] || "—"}</td>
+                <td className="p-2 border text-gray-500">
+                  {Product.OldPrice ? `$${Product.OldPrice}` : "—"}
+                </td>
+                <td className="p-2 border text-red-500">
+                  {Product.discount ? `${Product.discount}%` : "—"}
+                </td>
               </tr>
             );
           })}

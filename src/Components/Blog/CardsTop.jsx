@@ -5,7 +5,7 @@ import { MessageSquare } from "lucide-react";
 
 const CardsTop = () => {
   return (
-    <section className="w-full md:w-[40%] h-auto md:h-[87vh] border border-gray-300 rounded-lg md:rounded-none overflow-hidden">
+    <section className="w-full md:w-[50%] h-auto md:h-[87vh] border border-gray-300 rounded-lg md:rounded-none overflow-hidden">
       <div className="container flex flex-col w-full h-full gap-3 md:gap-5">
         <div
           className="cardtop w-full h-64 md:h-1/2 bg-red-500 flex justify-center items-end px-4 pb-6 md:pb-8"
