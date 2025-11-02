@@ -8,10 +8,12 @@ import MasterCard from "../../../public/mastercard.png";
 import Bitcoin from "../../../public/Bitcoin.png";
 import { CartContext } from "../../context/ContextCart";
 export default function Shipping() {
-  const [selectedPayment, setSelectedPayment] = useState("paypal");
-  const { setShippingCost , setSelectedShipping , selectedShipping } = useContext(CartContext);
-  const paying = [selectedPayment , selectedShipping]
-  localStorage.setItem("shipping" ,JSON.stringify(paying) )
+  const { setShippingCost, setSelectedShipping, selectedShipping, selectedPayment, setSelectedPayment } = useContext(CartContext);
+  const paying = [selectedPayment, selectedShipping]
+  localStorage.setItem("shipping", JSON.stringify(paying))
+  console.log(selectedPayment );
+  console.log(selectedShipping );
+  
 
   const paymentMethods = [
     {
@@ -85,20 +87,18 @@ export default function Shipping() {
               <div
                 key={method.id}
                 onClick={() => setSelectedPayment(method.id)}
-                className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                  selectedPayment === method.id
+                className={`border rounded-lg p-4 cursor-pointer transition-all ${selectedPayment === method.id
                     ? "border-blue-500 bg-blue-50"
                     : "border-gray-200 hover:border-gray-300"
-                }`}
+                  }`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        selectedPayment === method.id
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedPayment === method.id
                           ? "border-blue-500 bg-blue-500"
                           : "border-gray-300"
-                      }`}
+                        }`}
                     >
                       {selectedPayment === method.id && (
                         <div className="w-2 h-2 bg-white rounded-full"></div>
@@ -129,26 +129,24 @@ export default function Shipping() {
 
           <div className="space-y-4">
             {shippingMethods.map((method) => (
-              <div 
+              <div
                 key={method.id}
                 onClick={() => {
                   setSelectedShipping(method.id);
                   setShippingCost(method.priceShipping);
                 }}
-                className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                  selectedShipping === method.id
+                className={`border rounded-lg p-4 cursor-pointer transition-all ${selectedShipping === method.id
                     ? "border-blue-500 bg-blue-50"
                     : "border-gray-200 hover:border-gray-300"
-                }`}
+                  }`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        selectedShipping === method.id
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedShipping === method.id
                           ? "border-blue-500 bg-blue-500"
                           : "border-gray-300"
-                      }`}
+                        }`}
                     >
                       {selectedShipping === method.id && (
                         <div className="w-2 h-2 bg-white rounded-full"></div>

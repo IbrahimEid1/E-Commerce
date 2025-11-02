@@ -14,7 +14,23 @@ export const AddCart = ({ children }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [shippingCost, setShippingCost] = useState(0);
   const [selectedShipping, setSelectedShipping] = useState("transoCargo");
+    const [selectedPayment, setSelectedPayment] = useState("paypal");
+    
   
+  const [newOrder , setNewOrder]=useState({
+    data: {
+      firstName: "",
+      lastName: "",
+      email:"",
+      phone: "",
+      address: "",
+      country: "",
+      city: "",
+        categories: cartCount.map((item) => item.id),
+        TypePay:"" ,
+        TypeShipping:""
+  }
+  })
   const [active, setActive] = useState("Cards");
 
   const {
@@ -129,6 +145,9 @@ export const AddCart = ({ children }) => {
         isLoading,
         shippingCost,
         setShippingCost,
+        newOrder , 
+        setNewOrder ,
+        selectedPayment, setSelectedPayment
       }}
     >
       {children}

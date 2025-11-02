@@ -5,15 +5,18 @@ import ComponentsCards from "./CoponentsCards";
 import CustomerInformation from "./CustomerInformation";
 import Shipping from "./Shipping";
 import { useNavigate } from "react-router-dom";
+import useOrderCustomer from "../../hooks/OrderCustomer";
+import toast from "react-hot-toast";
 const ProductsCheckout = () => {
+  const CustomerOrder = useOrderCustomer()
+  const { setActive, selectedShipping, cartCount, active, newOrder } = useContext(CartContext);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
-  const { cartCount } = useContext(CartContext);
-  const { active, setActive } = useContext(CartContext);
   const { shippingCost } = useContext(CartContext);
   const [disabled, setDisabled] = useState(false)
+  const [success , setSuccess] = useState(false)
 
   useEffect(() => {
     if (cartCount.length === 0) {
@@ -46,17 +49,55 @@ const ProductsCheckout = () => {
   const total = Number(subtotal) + Number(giftBox) - Number(shippingCost) - Number(discount)
   const FinalTotal = total.toFixed(0)
   const Navigate = useNavigate()
-  const ConvertAndChecked = () => {
-    if (active === "Cards" && cartCount.length === 0) {
-      Navigate("/allproduct")
-    }
-    else if (active === "Cards" && cartCount.length > 0) {
-      setActive("CustomerInformation")
-
-    } else if (active === "CustomerInformation") {
-      setActive("ShippingPayment")
-    }
+ const ConvertAndChecked = () => {
+  if (cartCount.length === 0) {
+    toast.error("سلتك فاضية، أضف منتجات أولاً!");
+    Navigate("/allproduct");
+    return;
   }
+
+  if (active === "Cards") {
+    setActive("CustomerInformation");
+    return;
+  }
+
+  if (active === "CustomerInformation") {
+    const { firstName, lastName, email, phone, address, country, city } = newOrder.data || {};
+    if (!firstName?.trim() ||!lastName?.trim() ||!email?.trim() ||!phone ||!address?.trim() ||
+      !country?.trim() ||
+      !city?.trim()
+    ) {
+      toast.error("من فضلك أكمل بياناتك قبل المتابعة!");
+      console.log(newOrder);
+      
+     return;
+    }
+    setActive("ShippingPayment");
+    return;
+  }
+
+  if (active === "ShippingPayment") {
+    const { TypeShipping, TypePay } = newOrder.data || {};
+    if (!TypeShipping || !TypePay) {
+      toast.error("من فضلك أكمل الشحن والدفع!");
+      return
+    } 
+    CustomerOrder.mutate(newOrder, {
+      onSuccess: (res) => {
+        toast.success("✅ تم إنشاء الطلب بنجاح!");
+        console.log("Response:", res);
+        
+      },
+      onError: (err) => {
+        console.error("❌ Error:", err);
+        toast.error("فشل في إنشاء الطلب!");
+      },
+
+    });
+  }
+};
+
+
   return (
     <>
       <div className="flex flex-col md:flex-row justify-center gap-6 p-6 items-start flex-wrap">

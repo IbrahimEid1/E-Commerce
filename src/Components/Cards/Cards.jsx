@@ -6,6 +6,11 @@ import { Toaster } from "react-hot-toast";
 
 const Cards = () => {
   const { AddToCart, Products, basedUrl } = useContext(CartContext);
+    const getRandomProducts = (arr, count) => {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+  const resultRandom = getRandomProducts(Products , 4 )
   return (
     <div className="ParentCards w-full min-h-screen bg-gray-50 py-12 px-4 sm:px-6 flex flex-col">
       <div className="TitleParent w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between mb-10 sm:mb-14 gap-4">
@@ -20,7 +25,7 @@ const Cards = () => {
         </Link>
       </div>
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {Products.slice(0, 4).map((items, idx) => (
+        {resultRandom.map((items, idx) => (
           <div
             className="Card flex flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 "
             key={idx}
@@ -51,9 +56,9 @@ const Cards = () => {
             <div className="container-footerFlash w-full p-4 flex flex-col gap-2 items-start justify-start border-t border-gray-100">
               <div className="container-Brand w-full flex flex-col gap-1">
                 <p className="w-full text-lg font-bold text-gray-900">
-                  {items.description} $
+                  {items.name} 
                 </p>
-                <p className="text-sm text-gray-600">{items.category}</p>
+                <p className="text-sm text-gray-600">{items.name}</p>
                 <div className="flex items-center">
                   <div className="flex text-yellow-400">{"★".repeat(5)}</div>
                   <span className="text-xs text-gray-500 ml-1"> 45</span>
@@ -63,10 +68,10 @@ const Cards = () => {
               <div className="containerPrice w-full flex gap-3 flex-row items-center justify-start mt-2">
                 <span className="text-lg font-bold text-red-500">{items.price}$</span>
                 <span className="text-md text-gray-500 line-through">
-                 {items.OldPrice}
+                 {items.OldPrice} $
                 </span>
                 <span className="text-[9px] text-white font-bold p-1 rounded-[3px] bg-red-600">
-                  {items.discount}
+                  {items.discount} %
                 </span>
               </div>
             </div>

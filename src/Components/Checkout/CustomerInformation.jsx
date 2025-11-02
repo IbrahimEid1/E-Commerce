@@ -7,22 +7,12 @@ import { CartContext } from "../../context/ContextCart";
 import useOrderCustomer from "../../hooks/OrderCustomer";
 
 function CustomerInformation() {
-  const { handleSubmit, register, getValues, formState: { errors } } = useForm();
-  const { setActive, cartCount ,selectedShipping  } = useContext(CartContext);
-const CustomerOrder = useOrderCustomer()
+  const { handleSubmit, register, formState: { errors } } = useForm();
+  const { cartCount,newOrder, setNewOrder,selectedPayment , selectedShipping
+  } = useContext(CartContext);
   const options = countryList().getData();
-  const [orders, setOrders] = useState([]);
-
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [Customer, setCustomer] = useState({
-    firstName: "",
-    email: "",
-    lastName: "",
-    address: "",
-    country: selectedCountry?.label,
-    city: selectedCity?.label,
-  })
 
   const countryOptions = Country.getAllCountries().map((c) => ({
     value: c.isoCode,
@@ -36,14 +26,20 @@ const CustomerOrder = useOrderCustomer()
       label: city.name,
     }))
     : [];
- const onSubmit = (data) => {
+const onSubmit = (data) => {
+  
   const newCustomer = {
     ...data,
+    
     country: selectedCountry?.label,
     city: selectedCity?.label,
+    phone: Number(data.phone),
+    TypePay: selectedPayment,
+    TypeShipping: selectedShipping
   };
-
-  const NewOrder = {
+  console.log(data) ,
+  
+  setNewOrder({
     data: {
       firstName: newCustomer.firstName,
       lastName: newCustomer.lastName,
@@ -52,24 +48,15 @@ const CustomerOrder = useOrderCustomer()
       address: newCustomer.address,
       country: newCustomer.country,
       city: newCustomer.city,
-      categories: cartCount.map((item) => item.id), 
-    },
-  };
-
-  console.log(NewOrder);
-
-  CustomerOrder.mutate(NewOrder, {
-    onSuccess: (res) => {
-      alert("✅ Order created successfully!");
-      console.log("Response:", res);
-      setActive("ShippingPayment");
-    },
-    onError: (err) => {
-      console.error("❌ Error:", err);
-      alert("Failed to create order");
+      categories: cartCount.map((item) => item.id),
+      TypePay: newCustomer.TypePay,
+      TypeShipping: newCustomer.TypeShipping
     },
   });
+
+  console.log("✅ New Customer Data:", newCustomer);
 };
+
 
   return (
     <div className="w-full bg-white p-6 rounded-lg shadow-md border border-gray-100">
@@ -117,7 +104,7 @@ const CustomerOrder = useOrderCustomer()
             <div className="md:col-span-2">
               <label className="block mb-1 text-sm font-medium">Phone</label>
               <input
-                type="tel"
+                type="Number"
                 className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
                 {...register("phone", { required: "Please Enter Your Phone" })}
               />

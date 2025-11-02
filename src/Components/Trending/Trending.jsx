@@ -34,9 +34,9 @@ const Trending = () => {
               style={{ backgroundColor: "rgba(38,38,38,1)" }}
             >
               <div className="text text-gray-200 flex flex-col justify-between w-[60%] text-[14px]">
-                <p className="font-semibold">moha</p>
+                <p className="font-semibold">Cool & Sexy Calvin Klein</p>
                 <p className="text-zinc-400 mt-2 text-[12px]">
-                 dsadas
+                 Dotted dress-Casual
                 </p>
               </div>
               <Buttons

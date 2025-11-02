@@ -374,10 +374,10 @@ export default function Dashboard() {
           )}
 
           {currentPage === 'checkout' && (
-            <div className="max-w-4xl mx-auto h-auto flex items-center">
+            <div className="max-w-4xl mx-auto h-auto flex justify-start items-start">
               <div className="bg-white rounded-2xl shadow-xl p-8">
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">Checkout</h2>
-                <div className="text-gray-600"><AdminOrdersTable /></div>
+                <div className="text-gray-600 flex items-center justify-start"><AdminOrdersTable /></div>
               </div>
             </div>
           )}
