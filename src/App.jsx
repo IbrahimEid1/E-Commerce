@@ -34,7 +34,15 @@ function App() {
             <Route path="/noaccess" element={<NoAccess />} />
             <Route path="*" element={<NotFound/>}/>
             <Route
-              path="/addnew"
+              path="/addnew" 
+              element={
+                <ProtectedRoutes>
+                  <AddNew />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/dashboard" 
               element={
                 <ProtectedRoutes>
                   <AddNew />

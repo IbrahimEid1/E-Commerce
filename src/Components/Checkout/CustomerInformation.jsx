@@ -39,7 +39,6 @@ const onSubmit = (data) => {
     TypePay: selectedPayment,
     TypeShipping: selectedShipping
   };
-  console.log(data) ,
   
   setNewOrder({
     data: {
@@ -56,62 +55,61 @@ const onSubmit = (data) => {
     },
   }); 
   setActive("ShippingPayment")
-  console.log("✅ New Customer Data:", newCustomer);
 };
 
 
   return (
-    <div className="w-full bg-white p-6 rounded-lg shadow-md border border-gray-100">
-      <h2 className="text-2xl font-semibold mb-6 border-b pb-2">Checkout Form</h2>
+    <div className="w-full bg-white p-4 sm:p-5 md:p-6 lg:p-8 rounded-lg shadow-md border border-gray-100 max-w-full mx-auto">
+      <h2 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 border-b pb-2">Checkout Form</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
         {/* CUSTOMER INFO */}
         <section>
-          <h3 className="text-lg font-semibold mb-4 text-gray-700">Customer Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-700">Customer Information</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block mb-1 text-sm font-medium">First Name</label>
+              <label className="block mb-1 text-xs sm:text-sm font-medium">First Name</label>
               <input
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                 {...register("firstName", { required: "First name is required" })}
               />
               {errors.firstName && (
-                <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.firstName.message}</p>
               )}
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium">Last Name</label>
+              <label className="block mb-1 text-xs sm:text-sm font-medium">Last Name</label>
               <input
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                 {...register("lastName", { required: "Last name is required" })}
               />
               {errors.lastName && (
-                <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.lastName.message}</p>
               )}
             </div>
 
-            <div className="md:col-span-2">
-              <label className="block mb-1 text-sm font-medium">Email</label>
+            <div className="sm:col-span-2">
+              <label className="block mb-1 text-xs sm:text-sm font-medium">Email</label>
               <input
                 type="email"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                 {...register("email", { required: "Email is required" })}
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.email.message}</p>
               )}
             </div>
 
-            <div className="md:col-span-2">
-              <label className="block mb-1 text-sm font-medium">Phone</label>
+            <div className="sm:col-span-2">
+              <label className="block mb-1 text-xs sm:text-sm font-medium">Phone</label>
               <input
                 type="Number"
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                 {...register("phone", { required: "Please Enter Your Phone" })}
               />
               {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.phone.message}</p>
               )}
             </div>
           </div>
@@ -119,10 +117,10 @@ const onSubmit = (data) => {
 
         {/* SHIPPING ADDRESS */}
         <section>
-          <h3 className="text-lg font-semibold mb-4 text-gray-700">Shipping Address</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-gray-700">Shipping Address</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block mb-1 text-sm font-medium">Country</label>
+              <label className="block mb-1 text-xs sm:text-sm font-medium">Country</label>
               <Select
                 options={countryOptions}
                 value={selectedCountry}
@@ -130,27 +128,29 @@ const onSubmit = (data) => {
                   setSelectedCountry(val);
                   setSelectedCity(null);
                 }}
+                className="text-sm sm:text-base"
               />
             </div>
 
             <div>
-              <label className="block mb-1 text-sm font-medium">City</label>
+              <label className="block mb-1 text-xs sm:text-sm font-medium">City</label>
               <Select
                 options={cityOptions}
                 value={selectedCity}
                 onChange={setSelectedCity}
                 isDisabled={!selectedCountry}
+                className="text-sm sm:text-base"
               />
             </div>
 
-            <div className="md:col-span-2">
-              <label className="block mb-1 text-sm font-medium">Address</label>
+            <div className="sm:col-span-2">
+              <label className="block mb-1 text-xs sm:text-sm font-medium">Address</label>
               <input
-                className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full border border-gray-300 rounded-lg p-2 sm:p-2.5 text-sm sm:text-base focus:ring-2 focus:ring-blue-500 outline-none"
                 {...register("address", { required: "Address is required" })}
               />
               {errors.address && (
-                <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>
+                <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.address.message}</p>
               )}
             </div>
           </div>
@@ -160,7 +160,7 @@ const onSubmit = (data) => {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all duration-200"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base rounded-lg transition-all duration-200 w-full sm:w-auto"
           >
             Submit
           </button>

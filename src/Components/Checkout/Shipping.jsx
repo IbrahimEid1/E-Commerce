@@ -11,9 +11,7 @@ export default function Shipping() {
   const { setShippingCost, setSelectedShipping, selectedShipping, selectedPayment, setSelectedPayment } = useContext(CartContext);
   const paying = [selectedPayment, selectedShipping]
   localStorage.setItem("shipping", JSON.stringify(paying))
-  console.log(selectedPayment );
-  console.log(selectedShipping );
-  
+
 
   const paymentMethods = [
     {

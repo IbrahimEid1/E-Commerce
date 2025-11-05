@@ -5,13 +5,11 @@ import { useContext } from "react";
 import { CartContext } from "../context/ContextCart";
 
 export const useLogin = () => {
-  const { setUserRole} = useContext(CartContext)
-  const Role = JSON.parse(localStorage.getItem("user"));
+  const { setUserRole } = useContext(CartContext);
 
   return useMutation({
     mutationKey: ["Login"],
     mutationFn: async (credentials) => {
-      // 1. تسجيل الدخول
       const loginRes = await instance.post("auth/local", credentials, {
         headers: {
           "Content-Type": "application/json",
@@ -20,7 +18,7 @@ export const useLogin = () => {
 
       const loginData = loginRes.data;
 
-      // 2. جلب بيانات المستخدم مع الـ role
+      // جلب بيانات المستخدم مع الـ role
       const userRes = await instance.get("users/me?populate=role", {
         headers: {
           Authorization: `Bearer ${loginData.jwt}`,
@@ -31,20 +29,26 @@ export const useLogin = () => {
         jwt: loginData.jwt,
         user: {
           ...loginData.user,
-          role: userRes.data.role
-        }
+          role: userRes.data.role,
+        },
       };
     },
+
     onSuccess: (data) => {
-      localStorage.setItem("token", data.jwt);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      setUserRole(Role?.user?.role)
+      // حفظ البيانات في sessionStorage بدل localStorage
+      sessionStorage.setItem("token", data.jwt);
+      sessionStorage.setItem("user", JSON.stringify(data.user));
+
+      // تحديث الـ context
+      setUserRole(data.user.role);
+
       Swal.fire({
         title: "Good job!",
         text: "Login successful 🎉",
         icon: "success",
       });
     },
+
     onError: (error) => {
       Swal.fire({
         icon: "error",
@@ -53,4 +57,4 @@ export const useLogin = () => {
       });
     },
   });
-}
+};

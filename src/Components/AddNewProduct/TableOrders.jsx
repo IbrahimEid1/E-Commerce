@@ -29,7 +29,6 @@ export default function AdminOrdersTable() {
       </div>
     );
 
-  console.log(data);
 
   return (
     <div className="w-full">

@@ -3,7 +3,7 @@ import React from "react";
 import instance from "../../Config/InstanceAxios";
 
 const useOrderCustomer = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   return useMutation({
     mutationKey: ["DataCustomer"],
     mutationFn: async (orderData) => {

@@ -57,13 +57,13 @@ const MainContent = () => {
 
               {/* أيقونة القلب */}
               <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <button
+                <div
                   onClick={() => AddToFav(items)}
                   className="bg-white/95 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 border border-gray-100"
                   aria-label="Add to favorites"
                 >
                   <Heart className="w-5 h-5" />
-                </button>
+                </div>
               </div>
 
               {/* صورة المنتج */}
@@ -125,7 +125,7 @@ const MainContent = () => {
                   className="w-full mt-auto flex items-center justify-center gap-2.5 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 text-white py-3.5 rounded-xl font-medium text-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group/btn"
                 >
                   <ShoppingCart className="w-4 h-4 group-hover/btn:rotate-12 transition-transform duration-300" />
-                  <span>إضافة للسلة</span>
+                  <span> Add To Cart</span>
                 </button>
               </div>
             </div>

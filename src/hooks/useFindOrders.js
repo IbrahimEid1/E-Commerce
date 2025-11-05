@@ -3,7 +3,7 @@ import React from 'react'
 import instance from '../../Config/InstanceAxios'
 
 const useFindOrders = () => {
-  const token = localStorage.getItem("token")
+  const token = sessionStorage.getItem("token")
 return useQuery({
   queryKey:["FindOrder"],
   queryFn: async()=>{

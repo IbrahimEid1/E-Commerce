@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoutes = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
   const role = user?.role?.name;
 
   // لو مفيش user أصلاً

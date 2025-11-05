@@ -17,9 +17,9 @@ const NavBlack = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // بيانات المستخدم
-  const LogData =localStorage.getItem("token");
-  const authData =JSON.parse(localStorage.getItem("user"));
-  const userEmail = authData?.user?.email || "Login";
+  const LogData =sessionStorage.getItem("token");
+  const authData =JSON.parse(sessionStorage.getItem("user"));
+  const userEmail = sessionStorage?.user?.email || "Login";
   
   const isLoggedIn = !!LogData;
 
