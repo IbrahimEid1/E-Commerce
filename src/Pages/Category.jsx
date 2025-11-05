@@ -5,7 +5,6 @@ import NavCat2 from "../Components/Category/NavCat2";
 import ContentCategory from "../Components/Category/ContentCategory";
 import { memo } from "react";
 import { AllProducts } from "../Components/Category/AllProducts";
-import BtnRefetch from "../Components/Category/BtnRefetch";
 const Category = () => {
   const Products = AllProducts.find((item) => item.id);
   return (

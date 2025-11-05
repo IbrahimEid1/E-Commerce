@@ -1,34 +1,39 @@
 import { useContext, useEffect, useState } from "react";
-
 import { CartContext } from "../../context/ContextCart";
 import ComponentsCards from "./CoponentsCards";
 import CustomerInformation from "./CustomerInformation";
 import Shipping from "./Shipping";
+import DoneOrder from "./DoneOrder"; 
 import { useNavigate } from "react-router-dom";
 import useOrderCustomer from "../../hooks/OrderCustomer";
 import toast from "react-hot-toast";
+
 const ProductsCheckout = () => {
-  const CustomerOrder = useOrderCustomer()
-  const { setActive, selectedShipping, cartCount, active, newOrder } = useContext(CartContext);
+  const CustomerOrder = useOrderCustomer();
+  const { setActive, cartCount, active, newOrder, shippingCost } =
+    useContext(CartContext);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [error, setError] = useState("");
   const [disable, setDisable] = useState(false);
-  const { shippingCost } = useContext(CartContext);
-  const [disabled, setDisabled] = useState(false)
-  const [success , setSuccess] = useState(false)
-
+  const [disabled, setDisabled] = useState(false);
+  const [isOrderDone, setIsOrderDone] = useState(false);
+const Navigate = useNavigate()
   useEffect(() => {
-    if (cartCount.length === 0) {
-      setDisabled(false)
-    } else if (cartCount.length > 0) {
-      setDisabled(true)
-    }
-  }, [cartCount])
+    if (cartCount.length === 0) setDisabled(false);
+    else if (cartCount.length > 0) setDisabled(true);
+  }, [cartCount]);
+
   const subtotal = cartCount.reduce(
-    (acc, item) => acc + parseFloat(item.price) + Number() * discount, 0
+    (acc, item) => acc + parseFloat(item.price) + Number() * discount,
+    0
   );
+
   const giftBox = 10.9;
+  const total =
+    Number(subtotal) + Number(giftBox) - Number(shippingCost) - Number(discount);
+  const FinalTotal = total.toFixed(0);
+
   const handelDiscount = () => {
     if (discountCode === "Sale20") {
       setDiscount(total * 0.2);
@@ -36,7 +41,7 @@ const ProductsCheckout = () => {
       setDisable(true);
       setDiscountCode("");
     } else if (discountCode === "Sale50") {
-      setDiscount(total * 0.50);
+      setDiscount(total * 0.5);
       setError("");
       setDisable(true);
       setDiscount("");
@@ -46,60 +51,69 @@ const ProductsCheckout = () => {
       setDisable(false);
     }
   };
-  const total = Number(subtotal) + Number(giftBox) - Number(shippingCost) - Number(discount)
-  const FinalTotal = total.toFixed(0)
-  const Navigate = useNavigate()
- const ConvertAndChecked = () => {
-  if (cartCount.length === 0) {
-    toast.error("سلتك فاضية، أضف منتجات أولاً!");
-    Navigate("/allproduct");
-    return;
-  }
 
-  if (active === "Cards") {
-    setActive("CustomerInformation");
-    return;
-  }
 
-  if (active === "CustomerInformation") {
-    const { firstName, lastName, email, phone, address, country, city } = newOrder.data || {};
-    if (!firstName?.trim() ||!lastName?.trim() ||!email?.trim() ||!phone ||!address?.trim() ||
-      !country?.trim() ||
-      !city?.trim()
-    ) {
-      toast.error("من فضلك أكمل بياناتك قبل المتابعة!");
-      console.log(newOrder);
-      
-     return;
+  const ConvertAndChecked = () => {
+    if (cartCount.length === 0) {
+      toast.error("سلتك فاضية، أضف منتجات أولاً!");
+      Navigate("/allproduct");
+      return;
     }
-    setActive("ShippingPayment");
-    return;
-  }
 
-  if (active === "ShippingPayment") {
-    const { TypeShipping, TypePay } = newOrder.data || {};
-    if (!TypeShipping || !TypePay) {
-      toast.error("من فضلك أكمل الشحن والدفع!");
-      return
-    } 
-    CustomerOrder.mutate(newOrder, {
-      onSuccess: (res) => {
-        toast.success("✅ تم إنشاء الطلب بنجاح!");
-        console.log("Response:", res);
-        
-      },
-      onError: (err) => {
-        console.error("❌ Error:", err);
-        toast.error("فشل في إنشاء الطلب!");
-      },
+    if (active === "Cards") {
+      setActive("CustomerInformation");
+      return;
+    }
+    if (active === "CustomerInformation") {
+      const { firstName, lastName, email, phone, address, country, city } =
+        newOrder.data || {};
+      if (
+        !firstName?.trim() ||
+        !lastName?.trim() ||
+        !email?.trim() ||
+        !phone ||
+        !address?.trim() ||
+        !country?.trim() ||
+        !city?.trim()
+      ) {
+        toast.error("من فضلك أكمل بياناتك قبل المتابعة!");
+        return;
+      }
+      setActive("ShippingPayment");
+      return;
+    }
 
-    });
-  }
-};
+    if (active === "ShippingPayment") {
+      const { TypeShipping, TypePay } = newOrder.data || {};
+      if (!TypeShipping || !TypePay) {
+        toast.error("من فضلك أكمل الشحن والدفع!");
+        return;
+      }
+
+      CustomerOrder.mutate(newOrder, {
+        onSuccess: (res) => {
+          console.log("Response:", res);
+
+          setIsOrderDone(true);
+        },
+        onError: (err) => {
+          console.error("❌ Error:", err);
+          toast.error("فشل في إنشاء الطلب!");
+        },
+      });
+    }
+  };
+
+
 
 
   return (
     <>
+    {
+    <DoneOrder
+        isOpen={isOrderDone}
+        onClose={() =>{ setIsOrderDone(false);  Navigate("/")}}
+      />}
       <div className="flex flex-col md:flex-row justify-center gap-6 p-6 items-start flex-wrap">
         <div
           className="w-[60%] flex flex-col justify-start space-y-4 mx-auto 
@@ -158,7 +172,7 @@ const ProductsCheckout = () => {
         </div>
 
         {/* Right - Order Summary */}
-        <div className="w-full h-[50vh] flex flex-col justify-center md:w-80 border rounded-lg p-4 bg-gray-200 mr-16">
+       {active==="CustomerInformation" ? null :  <div className="w-full h-[50vh] flex flex-col justify-center md:w-80 border rounded-lg p-4 bg-gray-200 mr-16">
           <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
 
           <div className="flex justify-between py-1">
@@ -220,7 +234,7 @@ const ProductsCheckout = () => {
               <p className="text-red-500 text-sm  mr-5 text-end">{error}</p>
             )}
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );

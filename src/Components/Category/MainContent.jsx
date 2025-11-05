@@ -3,103 +3,149 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../../context/ContextCart";
 import Heart from "../../UI/Heart";
 import Star from "../../UI/Stars";
-import { Commet } from "react-loading-indicators";
-import BtnRefetch from "./BtnRefetch";
-import Footer from "../../Components/ProductDetails/Footer";
+import { ShoppingCart, RefreshCw } from "lucide-react";
+
+// Skeleton Component
+const ProductSkeleton = () => (
+  <div className="Card flex flex-col bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 animate-pulse">
+    {/* صورة skeleton */}
+    <div className="w-full h-[280px] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+      <div className="w-32 h-32 bg-gray-300 rounded-lg"></div>
+    </div>
+    
+    {/* محتوى skeleton */}
+    <div className="flex flex-col flex-1 p-4 space-y-3">
+      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+      <div className="h-3 bg-gray-200 rounded w-full"></div>
+      <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+      
+      <div className="flex items-center gap-1 pt-2">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="w-4 h-4 bg-gray-200 rounded"></div>
+        ))}
+      </div>
+      
+      <div className="flex items-center gap-2 pt-2">
+        <div className="h-6 bg-gray-200 rounded w-20"></div>
+        <div className="h-4 bg-gray-200 rounded w-16"></div>
+      </div>
+      
+      <div className="h-11 bg-gray-200 rounded-xl mt-auto"></div>
+    </div>
+  </div>
+);
 
 const MainContent = () => {
   const { AddToCart, AddToFav, Products } = useContext(CartContext);
 
   return (
-    <>
-      {/* ✅ الجريد الخاصة بالمنتجات */}
-      <div className="flashSales w-[100%] max-w-[70rem] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4 md:px-0 mt-6">
+    <div className="w-full bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen py-8">
+      {/* الجريد الخاصة بالمنتجات */}
+      <div className="flashSales w-[100%] max-w-[75rem] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 px-4 sm:px-6">
         {Products.length > 0 ? (
           Products.map((items, index) => (
             <div
-              className="Card flex h-[600px] flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
-              key={`${items.id}-${index}`} // ✅ مفتاح فريد لتفادي التحذير
+              className="Card group relative flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-blue-200"
+              key={`${items.id}-${index}`}
             >
-              <div className="ContainerImg flex justify-center items-center p-3 sm:p-4 md:p-5 w-[100%] h-[200px] sm:h-[300px] md:h-[370px]">
-                <Link
-                  to={`/Allproduct/${items.documentId}`}
-                  className="w-[100%] h-[100%] object-cover rounded-lg flex justify-center items-center"
-                >
-                  <img
-                    src={items.Image?.url}
-                    className="w-[70%] h-auto object-cover"
-                    alt={items.name}
-                  />
-                </Link>
-              </div>
-
-              <div className="container-footerFlash w-full p-3 sm:p-4 flex flex-col gap-2 items-start justify-start border-t border-gray-100">
-                <div className="container-Brand w-full flex flex-col">
-                  <p className="w-full text-xs sm:text-sm md:text-[12px] font-bold text-gray-900 line-clamp-2">
-                    {items.name}
-                  </p>
-                  <p className="text-xs sm:text-xs md:text-[10px] text-gray-600 line-clamp-3 flex flex-row w-full items-center justify-between">
-                    {items.description}
-                    <Heart
-                      onClick={() => {
-                        AddToFav(items);
-                      }}
-                    />
-                  </p>
-                  <div className="flex items-center mt-1 flex-row justify-between w-full">
-                    <div className="flex text-yellow-400 justify-evenly items-center">
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <span className="text-xs text-gray-500 ml-1">
-                        ({items.rate})
-                      </span>
-                    </div>
-                  </div>
+              {/* Badge الخصم */}
+              {items.discount && (
+                <div className="absolute top-3 left-3 z-10 bg-gradient-to-r from-red-500 via-red-600 to-pink-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                  -{items.discount}%
                 </div>
+              )}
 
-                <div className="containerPrice w-full flex gap-2 sm:gap-3 flex-row items-center justify-start mt-2">
-                  <span className="text-sm sm:text-base md:text-[14px] font-bold text-red-500">
-                    $ {items.price}
-                  </span>
-                  <span className="text-xs sm:text-sm md:text-[12px] text-gray-500 line-through">
-                    ${items.OldPrice}
-                  </span>
-                  <span className="text-xs sm:text-xs md:text-[9px] text-white font-bold px-1 py-1 rounded-[3px] bg-red-600">
-                    {items.discount} %
-                  </span>
-                </div>
-              </div>
-
-              <div className="btn w-30 rounded-md mx-3 mb-3 outline-none bg-blue-600 text-center">
+              {/* أيقونة القلب */}
+              <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <button
-                  className="text-[12px] p-1 text-white m-2"
-                  onClick={() => {
-                    AddToCart(items);
-                  }}
+                  onClick={() => AddToFav(items)}
+                  className="bg-white/95 backdrop-blur-sm p-2.5 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 border border-gray-100"
+                  aria-label="Add to favorites"
                 >
-                  Add To Cart
+                  <Heart className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* صورة المنتج */}
+              <Link
+                to={`/Allproduct/${items.documentId}`}
+                className="relative w-full h-[280px] flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 via-white to-gray-50 group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50 transition-all duration-500"
+              >
+                <img
+                  src={items.Image?.url}
+                  className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                  alt={items.name}
+                  loading="lazy"
+                />
+              </Link>
+
+              {/* معلومات المنتج */}
+              <div className="flex flex-col flex-1 p-4 space-y-3">
+                {/* اسم المنتج */}
+                <Link to={`/Allproduct/${items.documentId}`}>
+                  <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 hover:text-blue-600 transition-colors duration-300 min-h-[40px] leading-tight">
+                    {items.name}
+                  </h3>
+                </Link>
+
+                {/* الوصف */}
+                <p className="text-xs text-gray-500 line-clamp-2 min-h-[32px] leading-relaxed">
+                  {items.description}
+                </p>
+
+                {/* التقييم */}
+                <div className="flex items-center gap-1">
+                  <div className="flex text-yellow-400">
+                    <Star />
+                    <Star />
+                    <Star />
+                    <Star />
+                    <Star />
+                  </div>
+                  <span className="text-xs text-gray-500 ml-1 font-medium">
+                    ({items.rate || "4.5"})
+                  </span>
+                </div>
+
+                {/* السعر */}
+                <div className="flex items-center gap-2 pt-1">
+                  <span className="text-xl font-bold text-gray-900">
+                    ${items.price}
+                  </span>
+                  {items.OldPrice && (
+                    <span className="text-sm text-gray-400 line-through">
+                      ${items.OldPrice}
+                    </span>
+                  )}
+                </div>
+
+                {/* زر الإضافة للسلة */}
+                <button
+                  onClick={() => AddToCart(items)}
+                  className="w-full mt-auto flex items-center justify-center gap-2.5 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 text-white py-3.5 rounded-xl font-medium text-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group/btn"
+                >
+                  <ShoppingCart className="w-4 h-4 group-hover/btn:rotate-12 transition-transform duration-300" />
+                  <span>إضافة للسلة</span>
                 </button>
               </div>
             </div>
           ))
         ) : (
-          <div className="col-span-3 text-center">
-            <p className="text-gray-500 text-lg">
-              <Commet color="#1839d0" size="large" text="" textColor="" />
-            </p>
-          </div>
+          // Skeleton Loading
+          <>
+            {[...Array(8)].map((_, index) => (
+              <ProductSkeleton key={index} />
+            ))}
+          </>
         )}
-      <div className=" w-full flex p-10 justify-center translate-x-80">
-        <BtnRefetch />
-        
-      </div>
-      
       </div>
 
-
-    </>
+      {/* زر Load More المحسن */}
+      {Products.length > 0 && (
+        <div className="w-full flex justify-center mt-12 mb-8 px-4">
+        </div>
+      )}
+    </div>
   );
 };
 

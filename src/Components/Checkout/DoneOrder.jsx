@@ -3,7 +3,7 @@ import { X } from 'lucide-react';
 export default function DoneOrder({isOpen , onClose}) {
     if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-  center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm animate-fadeIn">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-slideUp">
         {/* Close Button */}
         <button  onClick={onClose}

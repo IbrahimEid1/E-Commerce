@@ -5,14 +5,16 @@ import { Country, City } from "country-state-city";
 import { useForm } from "react-hook-form";
 import { CartContext } from "../../context/ContextCart";
 import useOrderCustomer from "../../hooks/OrderCustomer";
+import { useNavigate } from "react-router-dom";
 
 function CustomerInformation() {
   const { handleSubmit, register, formState: { errors } } = useForm();
-  const { cartCount,newOrder, setNewOrder,selectedPayment , selectedShipping
+  const { cartCount,setActive, setNewOrder,selectedPayment , selectedShipping
   } = useContext(CartContext);
   const options = countryList().getData();
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
+  const Navigate = useNavigate()
 
   const countryOptions = Country.getAllCountries().map((c) => ({
     value: c.isoCode,
@@ -52,8 +54,8 @@ const onSubmit = (data) => {
       TypePay: newCustomer.TypePay,
       TypeShipping: newCustomer.TypeShipping
     },
-  });
-
+  }); 
+  setActive("ShippingPayment")
   console.log("✅ New Customer Data:", newCustomer);
 };
 

@@ -57,7 +57,6 @@ const Navbar = () => {
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-6 flex-1 justify-center">
-          <InputSearch />
           <List />
 
         </div>
