@@ -15,6 +15,13 @@ export const AddCart = ({ children }) => {
   const [shippingCost, setShippingCost] = useState(0);
   const [selectedShipping, setSelectedShipping] = useState("transoCargo");
   const [selectedPayment, setSelectedPayment] = useState("paypal");
+  const updateQuantity = (id, newQuantity) => {
+  setCartCount((prev) =>
+    prev.map((item) =>
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    )
+  );
+};
 
   const [newOrder, setNewOrder] = useState({
     data: {
@@ -154,6 +161,7 @@ export const AddCart = ({ children }) => {
         setNewOrder,
         selectedPayment,
         setSelectedPayment,
+        updateQuantity
       }}
     >
       {children}
