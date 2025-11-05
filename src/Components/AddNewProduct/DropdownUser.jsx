@@ -28,8 +28,8 @@ const DropdownUser = () => {
 
                     {/* خيار تسجيل الخروج (Log Out) */}
                     <button onClick={() => {
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("user");
+                        sessionStorage.removeItem("token");
+                        sessionStorage.removeItem("user");
                         navigate("/login");
                     }}
 
