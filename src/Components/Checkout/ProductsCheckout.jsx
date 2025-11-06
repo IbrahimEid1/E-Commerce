@@ -24,15 +24,15 @@ const Navigate = useNavigate()
     else if (cartCount.length > 0) setDisabled(true);
   }, [cartCount]);
 
-  const subtotal = cartCount.reduce(
-    (acc, item) => acc + parseFloat(item.price) + Number() * discount,
-    0
-  );
+ const subtotal = cartCount.reduce(
+  (acc, item) => acc + item.price * item.quantity,
+  0
+);
 
-  const giftBox = 10.9;
-  const total =
-    Number(subtotal) + Number(giftBox) - Number(shippingCost) - Number(discount);
-  const FinalTotal = total.toFixed(0);
+const total =
+  subtotal  + shippingCost - discount;
+
+const FinalTotal = total.toFixed(2);
 
   const handelDiscount = () => {
     if (discountCode === "Sale20") {
@@ -170,7 +170,7 @@ const Navigate = useNavigate()
         </div>
 
         {/* Right - Order Summary */}
-       {active==="CustomerInformation" ? null :  <div className="w-full lg:w-80 h-auto lg:h-[50vh] flex flex-col justify-center border rounded-lg p-3 sm:p-4 bg-gray-200 lg:mr-16 mx-auto lg:mx-0">
+       {active==="CustomerInformation" || cartCount.length===0 ? null :  <div className="w-full lg:w-80 h-auto lg:h-[50vh] flex flex-col justify-center border rounded-lg p-3 sm:p-4 bg-gray-200 lg:mr-16 mx-auto lg:mx-0">
           <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Order Summary</h2>
 
           <div className="flex justify-between py-1 text-sm sm:text-base">
@@ -190,11 +190,7 @@ const Navigate = useNavigate()
             <span> {discount} </span>
           </div>
 
-          <div className="flex items-center gap-2 py-2 text-xs sm:text-sm">
-            <input type="checkbox" defaultChecked className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span>Pack in a Gift Box</span>
-            <span className="ml-auto">${giftBox.toFixed(2)}</span>
-          </div>
+          
 
           <hr className="my-2" />
 

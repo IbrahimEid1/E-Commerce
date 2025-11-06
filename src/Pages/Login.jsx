@@ -90,6 +90,8 @@ export default function SignInForm() {
                   onChange={handelOnChange}
                   onFocus={() => setFocusedField('email')}
                   onBlur={() => setFocusedField(null)}
+                    autoComplete="email"
+
                   className="w-full pl-11 pr-4 py-3.5 border-2 border-white/10 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 transition-all text-sm bg-white/5 text-white placeholder:text-gray-500 focus:bg-white/10"
                 />
               </div>
@@ -113,6 +115,7 @@ export default function SignInForm() {
                   onChange={handelOnChange}
                   onFocus={() => setFocusedField('password')}
                   onBlur={() => setFocusedField(null)}
+  autoComplete="current-password"
                   className="w-full pl-11 pr-12 py-3.5 border-2 border-white/10 rounded-xl focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/20 transition-all text-sm bg-white/5 text-white placeholder:text-gray-500 focus:bg-white/10"
                 />
                 <button

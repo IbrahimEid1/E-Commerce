@@ -1,5 +1,4 @@
 import Navbar from "../Components/Nav/Navbar";
-import NavBlack from "../Components/Nav/NavBlack";
 import NavMenu from "../Components/Nav/NavMenu";
 import HeroSection from "../Components/HeroSection/HeroSection";
 import Cards from "../Components/Cards/Cards";
@@ -20,6 +19,7 @@ if (isLoading) return <Loading/>
     <>
       <Navbar />
       <Nav/>
+      <NavMenu/>
       <HeroSection />
       <Cards />
       <Trending />

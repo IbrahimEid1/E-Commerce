@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../context/ContextCart";
 import { Trash2 } from "lucide-react";
+import EmptyCart from "./EmptyCart";
+import { useNavigate } from "react-router-dom";
 
 const ComponentsCards = () => {
   const { cartCount, removeItem, updateQuantity } = useContext(CartContext);
-
+const navigate = useNavigate()
   return (
     <>
-      {cartCount.length ? (
+      {cartCount.length ? ( 
         <>
           {cartCount.map((item) => (
             <div
@@ -66,9 +68,8 @@ const ComponentsCards = () => {
           ))}
         </>
       ) : (
-        <p className="text-center text-gray-500 py-8 text-sm sm:text-base">
-          Not Found Data In Cart
-        </p>
+     <EmptyCart onContinueShopping={() => navigate('/allproduct')} />
+
       )}
     </>
   );

@@ -4,15 +4,15 @@ import { memo } from "react";
 
 const NavMenu = () => {
   const Menu = [
-    "woman",
-    "Male",
-    "Mother-Child",
-    "Home-Furniture",
-    "SuperMarket",
-    "Cosmetics",
-    "Shoe & Bag",
-    "Electronic",
-    "Sport & Outdoor",
+    "Dresses",
+    "Tops & Blouses",
+    "Pants & Jeans",
+    "Skirts",
+    "Jackets & Coats",
+    "Activewear",
+    "Lingerie",
+    "Shoes & Bags",
+    "Accessories",
   ];
 
   return (

@@ -1,45 +1,10 @@
-responsive-navmenu {
+.responsive-navmenu {
   background: white;
   border-top: 1px solid #e5e7eb;
   border-bottom: 1px solid #e5e7eb;
   width: 100%;
   z-index: 50;
-}
-.menu-list {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  z-index: 50;
-}
-
-.menu-list-item {
   position: relative;
-  z-index: 50;
-}
-
-.menu-item {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px 15px;
-  font-size: 16px;
-  z-index: 50;
-}
-
-.mega-menu-container {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 1300px;
-  display: none;
-  z-index: 100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 50;
-}
-
-.menu-list-item:hover .mega-menu-container {
-  display: block;
-  z-index: 50;
 }
 
 .menu-container {
@@ -59,7 +24,7 @@ responsive-navmenu {
 }
 
 .menu-list-item {
-  position: relative;
+  position: static;
 }
 
 .menu-item {
@@ -101,16 +66,33 @@ responsive-navmenu {
   width: 80%;
 }
 
+/* Mega Menu Container */
 .mega-menu-container {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
-  
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  max-width: 95vw;
+  background: white;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  margin-top: 0;
+}
+
+/* Show mega menu on hover */
+.menu-list-item:hover .mega-menu-container {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
 }
 
 .mega-menu-wrapper {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -124,6 +106,10 @@ responsive-navmenu {
   .menu-item {
     padding: 0.75rem 0.5rem;
     font-size: 0.9rem;
+  }
+
+  .mega-menu-container {
+    width: 100vw;
   }
 }
 
