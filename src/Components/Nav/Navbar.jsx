@@ -52,8 +52,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-4 sm:px-8 py-3">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src={Logo} alt="Logo" className="w-10 h-10" />
-          <h1 className="text-xl font-bold">Luminae</h1>
+          <img src={Logo} alt="Logo" className="w-40 h-10 object-contain" />
         </div>
 
         {/* Desktop */}
