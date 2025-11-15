@@ -12,9 +12,11 @@ import {  memo, useContext } from "react"
 import Nav from "../Components/Nav/Nav";
 import { CartContext } from "../context/ContextCart";
 import Loading from "../Components/Loading";
+import { useApiCardsHome } from "../hooks/ApiCardsHome";
+import ShopXLoader from "../Components/Loading";
 const Home = () => {
-// const {isLoading} = useContext(CartContext)
-// if (isLoading) return <Loading/>
+const {isLoading} = useApiCardsHome()
+if (isLoading) return <ShopXLoader fullScreen={true}/>
   return (
     <>
       <Navbar />

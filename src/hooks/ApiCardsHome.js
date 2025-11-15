@@ -2,7 +2,7 @@ import {  useQuery } from "@tanstack/react-query";
 import instance from "../../Config/InstanceAxios";
 
 
-export const ApiCardsHome = () => {
+export const useApiCardsHome = () => {
   return useQuery({
     queryKey: ["DataCard"],
 

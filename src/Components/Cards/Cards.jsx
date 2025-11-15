@@ -3,12 +3,12 @@ import { memo, useContext } from "react";
 import { CartContext } from "../../context/ContextCart";
 import { Toaster } from "react-hot-toast";
 import { ShoppingCart } from "lucide-react"; // Import a cart icon (assuming you use a library like lucide-react)
-import { ApiCardsHome } from "../../hooks/ApiCardsHome";
+import { useApiCardsHome } from "../../hooks/ApiCardsHome";
 import { ProductSkeleton } from "../Category/MainContent";
 
 const Cards = () => {
   const { AddToCart } = useContext(CartContext);
-const {data , isLoading } =ApiCardsHome()
+const {data , isLoading } =useApiCardsHome()
  const getRandomProducts = (arr, count) => {
   if (!Array.isArray(arr)) return []; // حماية
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
