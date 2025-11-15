@@ -3,15 +3,18 @@ import { memo, useContext } from "react";
 import { CartContext } from "../../context/ContextCart";
 import { Toaster } from "react-hot-toast";
 import { ShoppingCart } from "lucide-react"; // Import a cart icon (assuming you use a library like lucide-react)
+import { ApiCardsHome } from "../../hooks/ApiCardsHome";
+import { ProductSkeleton } from "../Category/MainContent";
 
 const Cards = () => {
-  const { AddToCart, Products, basedUrl } = useContext(CartContext);
-
-  const getRandomProducts = (arr, count) => {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  };
-  const resultRandom = getRandomProducts(Products, 4);
+  const { AddToCart } = useContext(CartContext);
+const {data , isLoading } =ApiCardsHome()
+ const getRandomProducts = (arr, count) => {
+  if (!Array.isArray(arr)) return []; // حماية
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
+  const resultRandom = getRandomProducts(data?.data , 4);
 
   return (
     <div className="ParentCards w-full bg-gray-50 py-12 px-4 sm:px-6 flex flex-col">
@@ -27,7 +30,7 @@ const Cards = () => {
         </Link>
       </div>
       <div className="flashSales w-[100%] max-w-[90rem] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {resultRandom.map((items, idx) => (
+        {isLoading ?[...Array(4)].map((_,index)=> <ProductSkeleton key={index}/> )  : resultRandom.map((items, idx) => (
           // 1. Add 'group' class to the parent Card div
           <div
             className="Card flex flex-col justify-start items-start bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group relative" // Added 'group' and 'relative'
@@ -89,6 +92,7 @@ const Cards = () => {
             {/* End of new overlay */}
           </div>
         ))}
+        
       </div>
       {/* 3. Render Toaster once, typically at the end of the component or layout */}
       <Toaster position="bottom-center" reverseOrder={true} />

@@ -13,8 +13,8 @@ import Nav from "../Components/Nav/Nav";
 import { CartContext } from "../context/ContextCart";
 import Loading from "../Components/Loading";
 const Home = () => {
-const {isLoading} = useContext(CartContext)
-if (isLoading) return <Loading/>
+// const {isLoading} = useContext(CartContext)
+// if (isLoading) return <Loading/>
   return (
     <>
       <Navbar />

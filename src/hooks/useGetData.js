@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import instance from "../../Config/InstanceAxios";
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 24;
 
 export const useGetdata = () => {
   return useInfiniteQuery({

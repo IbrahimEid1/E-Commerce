@@ -6,7 +6,7 @@ import Star from "../../UI/Stars";
 import { ShoppingCart, RefreshCw } from "lucide-react";
 
 // Skeleton Component
-const ProductSkeleton = () => (
+export const ProductSkeleton = () => (
   <div className="Card flex flex-col bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 animate-pulse">
     {/* صورة skeleton */}
     <div className="w-full h-[280px] bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
